@@ -1,6 +1,7 @@
 # Authors
-Rebeka Černianska
-Sabína Švecková
-Matej Jurík
-Marek Miček
-Peter Rúček
+
+* Rebeka Černianska
+* Sabína Švecková
+* Matej Jurík
+* Marek Miček
+* Peter Rúček
