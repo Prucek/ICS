@@ -11,7 +11,7 @@ namespace ICSproj.Entities
         public Guid StageId { get; set; }
         public StageEntity Stage { get; set; }
         public DateTime PerformanceDateTime { get; set; }
-        public TimeSpan PerformanceDuration { get; set; } // Consider int or another DateTime
+        public TimeSpan PerformanceDuration { get; set; }
 
 
         //<desc>Test helper</desc>

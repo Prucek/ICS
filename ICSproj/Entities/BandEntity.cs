@@ -11,7 +11,7 @@ namespace ICSproj.Entities
         public ICollection<PhotoEntity> Photos { get; } = new List<PhotoEntity>();
         public ICollection<ScheduleEntity> PerformanceMapping { get; } = new List<ScheduleEntity>();
         public string Genre { get; set; }
-        public string Origin { get; set; } // Country Code ?
+        public string Origin { get; set; } // Country Code
         public string DescriptionLong { get; set; }
 
         /**

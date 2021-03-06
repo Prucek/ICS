@@ -7,15 +7,8 @@ namespace ICSproj.Entities
 {
     public class PhotoEntity : BaseEntity
     {
-        public string SrcPath { get; set; } /* Todo: Refactor to filesystem-path-optimized struct/object type */
-
-        //public Image Image { get; set; } ??instead??
-        //Image image1 = Image.FromFile("c:\\FakePhoto1.jpg");
-
-        //https://www.entityframeworktutorial.net/Types-of-Entities.aspx
-        // byte[]
-
-        //public string Extension { get; set; }
-        //public double Size { get; set; }
+        private byte[] Photo { get; set; }
+        public string Extension { get; set; }
+        public int Size { get; set; }
     }
 }
