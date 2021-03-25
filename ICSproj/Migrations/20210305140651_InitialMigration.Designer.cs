@@ -39,7 +39,7 @@ namespace ICSproj.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Origin")
+                    b.Property<string>("OriginCountry")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

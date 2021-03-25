@@ -2,11 +2,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ICSproj.Tests
 {
-    public class DbContextInMemoryFacotry
+    public class DbContextInMemoryFactory
     {
         private readonly string _dbName;
 
-        public DbContextInMemoryFacotry(string dbName)
+        public DbContextInMemoryFactory(string dbName)
         {
             _dbName = dbName;
         }

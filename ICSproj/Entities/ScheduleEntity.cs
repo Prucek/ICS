@@ -13,21 +13,6 @@ namespace ICSproj.Entities
         public DateTime PerformanceDateTime { get; set; }
         public TimeSpan PerformanceDuration { get; set; }
 
-
-        //<desc>Test helper</desc>
-        //public void parseDateTime()
-        //{
-        //    Console.WriteLine($"{this.PerformanceDateTime.Date} - date ...... {this.PerformanceDateTime.TimeOfDay} - time");
-        //}
-
-        //<desc>Test helper</desc>
-        //public void checkDateTimeArtithmetics()
-        //{
-        //    DateTime myDate = DateTime.Now;
-
-        //    Console.WriteLine(this.PerformanceDateTime + this.PerformanceDuration);
-        //    Console.WriteLine(this.PerformanceDateTime > myDate);
-        //}
         public bool Equals(ScheduleEntity other)
         {
             if (ReferenceEquals(null, other)) return false;

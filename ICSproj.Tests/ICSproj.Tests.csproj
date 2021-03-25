@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ICSproj\ICSproj.csproj" />
+    <ProjectReference Include="..\ICSproj\ICSproj.DAL.csproj" />
   </ItemGroup>
 
 </Project>

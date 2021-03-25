@@ -9,11 +9,11 @@ namespace ICSproj.Tests
     public class FestivalDbContextTest : IDisposable
     {
         private readonly FestivalDbContext _dbContextSUT;
-        private readonly DbContextInMemoryFacotry _dbContextFactory;
+        private readonly DbContextInMemoryFactory _dbContextFactory;
 
         public FestivalDbContextTest()
         {
-            _dbContextFactory = new DbContextInMemoryFacotry(nameof(FestivalDbContextTest));
+            _dbContextFactory = new DbContextInMemoryFactory(nameof(FestivalDbContextTest));
             _dbContextSUT = _dbContextFactory.Create();
         }
 
@@ -27,7 +27,7 @@ namespace ICSproj.Tests
                 DescriptionLong = "Lorem ipsum",
                 Genre = "Rock",
                 Name = "21 pilots",
-                Origin = "USA",
+                OriginCountry = "USA",
                 PerformanceMapping =
                 {
                     new ScheduleEntity()
@@ -77,7 +77,7 @@ namespace ICSproj.Tests
                             Name = "Separ", 
                             Description = "Michal Kmet", 
                             Genre = "Rap", 
-                            Origin = "Slovakia", 
+                            OriginCountry = "Slovakia", 
                             DescriptionLong = "Je to lepsie jak hocico si si dal dnes"
                         }
                     },
@@ -90,7 +90,7 @@ namespace ICSproj.Tests
                         Name = "Coldplay", 
                         Description = "British rock band formed in London in 1996", 
                         Genre = "Rock", 
-                        Origin = "England", 
+                        OriginCountry = "England", 
                         DescriptionLong = "www.coldplay.com"
                     }
                 }
@@ -120,7 +120,7 @@ namespace ICSproj.Tests
                 DescriptionLong = "Lorem ipsum",
                 Genre = "Rock",
                 Name = "21 pilots",
-                Origin = "USA"
+                OriginCountry = "USA"
             };
 
             var scheduleEntity = new ScheduleEntity()

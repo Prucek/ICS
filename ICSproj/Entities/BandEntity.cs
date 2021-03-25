@@ -11,7 +11,7 @@ namespace ICSproj.Entities
         public ICollection<PhotoEntity> Photos { get; } = new List<PhotoEntity>();
         public ICollection<ScheduleEntity> PerformanceMapping { get; } = new List<ScheduleEntity>();
         public string Genre { get; set; }
-        public string Origin { get; set; } // Country Code
+        public string OriginCountry { get; set; }
         public string DescriptionLong { get; set; }
 
         /**
@@ -21,7 +21,7 @@ namespace ICSproj.Entities
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return Name == other.Name && Description == other.Description && Genre == other.Genre && Origin == other.Origin && DescriptionLong == other.DescriptionLong;
+            return Name == other.Name && Description == other.Description && Genre == other.Genre && OriginCountry == other.OriginCountry && DescriptionLong == other.DescriptionLong;
         }
 
         public override bool Equals(object obj)
@@ -34,7 +34,7 @@ namespace ICSproj.Entities
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Name, Description, Photos, PerformanceMapping, Genre, Origin, DescriptionLong);
+            return HashCode.Combine(Name, Description, Photos, PerformanceMapping, Genre, OriginCountry, DescriptionLong);
         }
     }
 }
