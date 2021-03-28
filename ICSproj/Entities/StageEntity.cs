@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ICSproj.Entities
+namespace ICSproj.DAL.Entities
 {
     public class StageEntity : BaseEntity, IFestivalEntity, IEquatable<StageEntity>
     {
         public string Name { get; set; }
         public string Description { get; set; }
-        public ICollection<PhotoEntity> Photos { get; } = new List<PhotoEntity>();
-        public ICollection<ScheduleEntity> PerformanceMapping { get; } = new List<ScheduleEntity>();
+        public ICollection<PhotoEntity> Photos { get; set; } = new List<PhotoEntity>();
+        public ICollection<ScheduleEntity> PerformanceMapping { get; set; } = new List<ScheduleEntity>();
 
         /**
          * Photos & PerformanceMapping are not working in this test

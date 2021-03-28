@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
-using ICSproj.Entities;
+using ICSproj.DAL.Entities;
+using ICSproj.DAL.Factories;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
 

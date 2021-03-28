@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using ICSproj.Entities;
+using ICSproj.DAL.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace ICSproj
+namespace ICSproj.DAL.Factories
 {
     public class FestivalDbContext : DbContext
     {

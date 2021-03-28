@@ -1,11 +1,12 @@
 ﻿using System;
-using System.Drawing;
-using System.Net.Mime;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace ICSproj.DAL.Entities
+namespace ICSproj.BL.Models
 {
-    public class PhotoEntity : BaseEntity
+    public class PhotoDetailModel : ModelBase
     {
         public byte[] Photo { get; set; }
         public string Extension { get; set; }

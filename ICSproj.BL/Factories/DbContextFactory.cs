@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ICSproj.DAL.Factories;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Design;
 
-namespace ICSproj
+namespace ICSproj.BL.Factories
 {
-    public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<FestivalDbContext>
+    class DbContextFactory : IDbContextFactory
     {
         public FestivalDbContext CreateDbContext(string[] args)
         {
