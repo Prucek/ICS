@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ICSproj.Entities
+namespace ICSproj.DAL.Entities
 {
     public interface IEntity
     {
