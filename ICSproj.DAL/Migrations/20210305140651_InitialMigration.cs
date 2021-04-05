@@ -63,7 +63,7 @@ namespace ICSproj.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Program",
+                name: "Schedule",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -101,12 +101,12 @@ namespace ICSproj.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_Program_BandId",
-                table: "Program",
+                table: "Schedule",
                 column: "BandId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Program_StageId",
-                table: "Program",
+                table: "Schedule",
                 column: "StageId");
         }
 
@@ -116,7 +116,7 @@ namespace ICSproj.Migrations
                 name: "PhotoEntity");
 
             migrationBuilder.DropTable(
-                name: "Program");
+                name: "Schedule");
 
             migrationBuilder.DropTable(
                 name: "Bands");

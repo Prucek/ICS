@@ -95,7 +95,7 @@ namespace ICSproj.Migrations
 
                     b.HasIndex("StageId");
 
-                    b.ToTable("Program");
+                    b.ToTable("Schedule");
                 });
 
             modelBuilder.Entity("ICSproj.Entities.StageEntity", b =>

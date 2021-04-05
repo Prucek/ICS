@@ -133,12 +133,12 @@ namespace ICSproj.Tests
                 
             };
 
-            _dbContextSUT.Program.Add(scheduleEntity);
+            _dbContextSUT.Schedule.Add(scheduleEntity);
             _dbContextSUT.SaveChanges();
 
 
             using var dbx = _dbContextFactory.Create();
-            var scheduleFromDatabase = dbx.Program
+            var scheduleFromDatabase = dbx.Schedule
                 .Include(schedule => schedule.Band)
                 .Include(schedule => schedule.Stage)
                 .FirstOrDefault(i => i.Id == scheduleEntity.Id);
