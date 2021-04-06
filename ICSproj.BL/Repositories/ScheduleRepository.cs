@@ -7,6 +7,7 @@ using ICSproj.BL.Mappers;
 using ICSproj.BL.Models;
 using ICSproj.DAL.Entities;
 using ICSproj.DAL.Factories;
+using Microsoft.EntityFrameworkCore;
 
 namespace ICSproj.BL.Repositories
 {
@@ -16,7 +17,7 @@ namespace ICSproj.BL.Repositories
 
         public ScheduleRepository(INamedDbContextFactory<FestivalDbContext> dbContextFactory)
         {
-            this._dbContextFactory = dbContextFactory;
+            _dbContextFactory = dbContextFactory;
         }
 
 
@@ -32,7 +33,10 @@ namespace ICSproj.BL.Repositories
         {
             using var dbContext = _dbContextFactory.Create();
 
-            var entity = dbContext.Schedule.Single(t => t.Id == id);
+            //var entity = dbContext.Schedule.Single(t => t.Id == id);
+            ScheduleEntity entity = dbContext.Schedule.Include(x =>x.Band)
+                .Include(x => x.Stage)
+                .Single(t => t.Id == id);
 
             return ScheduleMapper.MapScheduleEntityToDetailModel(entity);
         }
@@ -41,7 +45,9 @@ namespace ICSproj.BL.Repositories
         {
             using var dbContext = _dbContextFactory.Create();
 
-            var entity = ScheduleMapper.MapScheduleDetailModelToEntity(model);
+            var entity = ScheduleMapper.MapScheduleDetailModelToEntity(model, 
+                dbContext.Bands.Single(t => t.Name == model.BandName /*|| t.Id == model.BandId*/),
+                dbContext.Stages.Single(t => t.Name == model.StageName /*|| t.Id == model.StageId*/));
 
             if (entity == null) return null;
 
@@ -53,12 +59,12 @@ namespace ICSproj.BL.Repositories
 
         public void Delete(Guid id)
         {
-            //using var dbContext = _dbContextFactory.Create();
+            using var dbContext = _dbContextFactory.Create();
 
-            //var entity = new ScheduleEntity(id);
+            var entity = new ScheduleEntity(id);
 
-            //dbContext.Remove(entity);
-            //dbContext.SaveChanges();
+            dbContext.Remove(entity);
+            dbContext.SaveChanges();
         }
     }
 }

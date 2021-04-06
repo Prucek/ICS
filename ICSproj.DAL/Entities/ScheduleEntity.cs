@@ -6,6 +6,14 @@ namespace ICSproj.DAL.Entities
 {
     public class ScheduleEntity : BaseEntity, IEquatable<ScheduleEntity>
     {
+        public ScheduleEntity(Guid id)
+        {
+            Id = id;
+        }
+
+        public ScheduleEntity()
+        { }
+
         public Guid BandId { get; set; }
         public BandEntity Band { get; set; }
         public Guid StageId { get; set; }
