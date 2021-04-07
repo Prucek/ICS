@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ICSproj.BL.Mappers;
 using ICSproj.BL.Models;
 using ICSproj.DAL.Factories;
+using ICSproj.DAL.Entities;
 
 namespace ICSproj.BL.Repositories
 {
@@ -39,5 +40,26 @@ namespace ICSproj.BL.Repositories
 
             return StageMapper.MapStageEntityToDetailModel(entity);
         }
+
+        public void Delete(Guid id)
+        {
+            using var dbContext = _dbContextFactory.Create();
+
+            var entity = new StageEntity();
+
+            dbContext.Remove(entity);
+            dbContext.SaveChanges();
+        }
+
+        public IEnumerable<StageListModel> GetAll()
+        {
+            using var dbContext = _dbContextFactory.Create();
+
+            return dbContext.Stages
+                .Select(e => StageMapper.MapStageEntityToListModel(e)).ToArray();
+        }
+
+        //getall
+        //delete
     }
 }
