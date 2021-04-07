@@ -33,5 +33,6 @@ steps:
      **\*.Tests.dll
      !**\*TestAdapter.dll
      !**\obj\**
+     !**\ref\**
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
