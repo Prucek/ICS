@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ICSproj.BL.Mappers;
 using ICSproj.BL.Models;
 using ICSproj.DAL.Factories;
+using Microsoft.EntityFrameworkCore;
 
 namespace ICSproj.BL.Repositories
 {
@@ -35,9 +36,19 @@ namespace ICSproj.BL.Repositories
         {
             using var dbContext = _dbContextFactory.Create();
 
-            var entity = dbContext.Bands.Single(t => t.Id == id);
+            var entity = dbContext.Bands.Include(x =>x.PerformanceMapping)
+                .ThenInclude(x =>x.Stage)
+                .Single(t => t.Id == id);
 
             return BandMapper.MapBandEntityToDetailModel(entity);
+        }
+
+        public IEnumerable<BandListModel> GetAll()
+        {
+            using var dbContext = _dbContextFactory.Create();
+
+            return dbContext.Bands
+                .Select(e => BandMapper.MapBandEntityToListModel(e)).ToArray();
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ICSproj.BL.Mappers;
 using ICSproj.BL.Models;
 using ICSproj.DAL.Factories;
+using Microsoft.EntityFrameworkCore;
 
 namespace ICSproj.BL.Repositories
 {
@@ -35,7 +36,9 @@ namespace ICSproj.BL.Repositories
         {
             using var dbContext = _dbContextFactory.Create();
 
-            var entity = dbContext.Stages.Single(t => t.Id == id);
+            var entity = dbContext.Stages.Include(x => x.PerformanceMapping)
+                .ThenInclude(x=>x.Band)
+                .Single(t => t.Id == id);
 
             return StageMapper.MapStageEntityToDetailModel(entity);
         }
