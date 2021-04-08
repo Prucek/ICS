@@ -33,25 +33,32 @@ namespace ICSproj.BL.Repositories
 
             return StageMapper.MapStageEntityToDetailModel(entity);
         }
+        
         public StageDetailModel GetById(Guid id)
         {
             using var dbContext = _dbContextFactory.Create();
 
-            var entity = dbContext.Stages.Include(x => x.PerformanceMapping)
-                .ThenInclude(x=>x.Band)
-                .Single(t => t.Id == id);
+            StageEntity entity = dbContext.Stages.Single(t => t.Id == id);
 
             return StageMapper.MapStageEntityToDetailModel(entity);
         }
 
-        public void Delete(Guid id)
+        public bool Delete(Guid id)
         {
             using var dbContext = _dbContextFactory.Create();
 
-            var entity = new StageEntity();
+            var entity = new StageEntity(id);
 
             dbContext.Remove(entity);
-            dbContext.SaveChanges();
+            try
+            {
+                dbContext.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+            return true;
         }
 
         public IEnumerable<StageListModel> GetAll()
@@ -62,7 +69,6 @@ namespace ICSproj.BL.Repositories
                 .Select(e => StageMapper.MapStageEntityToListModel(e)).ToArray();
         }
 
-        //getall
-        //delete
+
     }
 }
