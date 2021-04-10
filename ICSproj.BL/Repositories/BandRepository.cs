@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ICSproj.BL.Mappers;
 using ICSproj.BL.Models;
+using ICSproj.DAL.Entities;
 using ICSproj.DAL.Factories;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,24 +24,57 @@ namespace ICSproj.BL.Repositories
         {
             using var dbContext = _dbContextFactory.Create();
 
-            var entity = BandMapper.MapBandDetailModelToEntity(model);
+            var entity = dbContext.Bands.SingleOrDefault(x => x.Name == model.Name);
 
-            if (entity == null) return null;
+            if (entity == null)
+            {
+                entity = BandMapper.MapBandDetailModelToEntity(model);
+            }
 
             dbContext.Bands.Update(entity);
             dbContext.SaveChanges();
 
             return BandMapper.MapBandEntityToDetailModel(entity);
         }
+
         public BandDetailModel GetById(Guid id)
         {
             using var dbContext = _dbContextFactory.Create();
 
-            var entity = dbContext.Bands.Include(x =>x.PerformanceMapping)
-                .ThenInclude(x =>x.Stage)
+            BandEntity entity = dbContext.Bands.Include(x => x.Photos)
+                .Include(x => x.PerformanceMapping)
+                .ThenInclude(x => x.Stage)
                 .Single(t => t.Id == id);
 
             return BandMapper.MapBandEntityToDetailModel(entity);
+        }
+
+        public BandDetailModel GetByName(string bandName)
+        {
+            using var dbContext = _dbContextFactory.Create();
+
+            BandEntity entity = dbContext.Bands.Single(t => t.Name == bandName);
+
+            return BandMapper.MapBandEntityToDetailModel(entity);
+        }
+
+        public bool Delete(Guid id)
+        {
+            using var dbContext = _dbContextFactory.Create();
+
+            var entity = new BandEntity(id);
+
+            dbContext.Remove(entity);
+            try
+            {
+                dbContext.SaveChanges();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         public IEnumerable<BandListModel> GetAll()

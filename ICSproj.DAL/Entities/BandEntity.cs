@@ -14,6 +14,16 @@ namespace ICSproj.DAL.Entities
         public string OriginCountry { get; set; }
         public string DescriptionLong { get; set; }
 
+
+        public BandEntity(Guid id)
+        {
+            Id = id;
+        }
+
+        public BandEntity()
+        {
+        }
+
         /**
          * Photos & PerformanceMapping are not working in this test
          */
