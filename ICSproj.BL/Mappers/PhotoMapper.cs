@@ -12,8 +12,6 @@ namespace ICSproj.BL.Mappers
     {
         public static PhotoListModel MapPhotoEntityToListModel(PhotoEntity entity)
         {
-            //byte[] ListPhoto = entity.Photo.ToArray();
-            
             return new PhotoListModel
             {
                 Id = entity.Id,
@@ -23,27 +21,21 @@ namespace ICSproj.BL.Mappers
 
         public static PhotoDetailModel MapPhotoEntityToDetailModel(PhotoEntity entity)
         {
-            //byte[] modelPhoto = entity.Photo.ToArray();
-
             return new PhotoDetailModel
             {
                 Id = entity.Id,
                 Photo = entity.Photo,
-                    Extension = entity.Extension,
-                Size = entity.Size
+                Extension = entity.Extension,
             };
         }
 
         public static PhotoEntity MapPhotoDetailModelToEntity(PhotoDetailModel model)
         {
-            //byte[] entityPhoto = model.Photo.ToArray();
-
             return new PhotoEntity
             {
                 Id = model.Id,
                 Photo = model.Photo,
                 Extension = model.Extension,
-                Size = model.Size
             };
         }
     }

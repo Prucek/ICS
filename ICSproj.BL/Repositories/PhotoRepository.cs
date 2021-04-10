@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ICSproj.BL.Mappers;
 using ICSproj.BL.Models;
+using ICSproj.DAL.Entities;
 using ICSproj.DAL.Factories;
 
 namespace ICSproj.BL.Repositories
@@ -26,16 +27,23 @@ namespace ICSproj.BL.Repositories
 
         public PhotoDetailModel GetById(Guid id)
         {
-            throw new NotImplementedException();
+            using var dbContext = _dbContextFactory.Create();
+
+            PhotoEntity entity = dbContext.Photos.Single(t => t.Id == id);
+
+            return PhotoMapper.MapPhotoEntityToDetailModel(entity);
         }
 
         public PhotoDetailModel InsertOrUpdate(PhotoDetailModel model)
         {
             using var dbContext = _dbContextFactory.Create();
 
-            var entity = PhotoMapper.MapPhotoDetailModelToEntity(model);
+            var entity = dbContext.Photos.SingleOrDefault(x => x.Photo == model.Photo);
 
-            if (entity == null) return null;
+            if (entity == null)
+            {
+                entity = PhotoMapper.MapPhotoDetailModelToEntity(model);
+            }
 
             dbContext.Photos.Update(entity);
             dbContext.SaveChanges();
@@ -45,7 +53,20 @@ namespace ICSproj.BL.Repositories
 
         public bool Delete(Guid id)
         {
-            throw new NotImplementedException();
+            using var dbContext = _dbContextFactory.Create();
+
+            var entity = new PhotoEntity(id);
+
+            dbContext.Remove(entity);
+            try
+            {
+                dbContext.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }
