@@ -22,9 +22,17 @@ namespace ICSproj.BL.Repositories
 
         public StageDetailModel InsertOrUpdate(StageDetailModel model)
         {
+            var entity = new StageEntity();
             using var dbContext = _dbContextFactory.Create();
             
-            var entity = StageMapper.MapStageDetailModelToEntity(model);
+            if (dbContext.Stages.Count() != 0)
+            {
+                entity = dbContext.Stages.SingleOrDefault(t => t.Name == model.Name);
+            }
+            else
+            {
+                entity = StageMapper.MapStageDetailModelToEntity(model);
+            }
 
             if (entity == null) return null;
 
@@ -32,13 +40,32 @@ namespace ICSproj.BL.Repositories
             dbContext.SaveChanges();
 
             return StageMapper.MapStageEntityToDetailModel(entity);
+
+            //var entity = StageMapper.MapStageDetailModelToEntity(t => t.Id == model.Id);
+            //if ( to_check != null)
+            //{
+            //    entity = dbContext.Stages.Single(t => t.Name == model.Name);
+            //}
+            //else
+            //{
+            //}
+            //using var dbContext = _dbContextFactory.Create();
         }
-        
+
         public StageDetailModel GetById(Guid id)
         {
             using var dbContext = _dbContextFactory.Create();
 
             StageEntity entity = dbContext.Stages.Single(t => t.Id == id);
+
+            return StageMapper.MapStageEntityToDetailModel(entity);
+        }
+
+        public StageDetailModel GetByName(string stageName)
+        {
+            using var dbContext = _dbContextFactory.Create();
+
+            StageEntity entity = dbContext.Stages.Single(t => t.Name == stageName);
 
             return StageMapper.MapStageEntityToDetailModel(entity);
         }

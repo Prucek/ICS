@@ -43,7 +43,7 @@ namespace ICSproj.BL.Tests
             {
                 Name = "First"
             };
-            _stageRepositorySUT.InsertOrUpdate(stage);
+            var returnedModel = _stageRepositorySUT.InsertOrUpdate(stage);
 
             var model = new ScheduleDetailModel()
             {
@@ -63,10 +63,6 @@ namespace ICSproj.BL.Tests
             };
             _scheduleRepositorySUT.InsertOrUpdate(model2);
 
-            stage.Description = "This is the best stage ever";
-            stage.Schedule = new List<ScheduleDetailModel> { model, model2 };
-            
-            var returnedModel = _stageRepositorySUT.InsertOrUpdate(stage);
             Assert.NotNull(returnedModel);
         }
 
@@ -98,14 +94,14 @@ namespace ICSproj.BL.Tests
                 Name = "Rock Stage",
                 Description = "Description"
             };
-            _stageRepositorySUT.InsertOrUpdate(stageModel);
+            var res1 = _stageRepositorySUT.InsertOrUpdate(stageModel);
 
             var stageModel2 = new StageDetailModel()
             {
                 Name = "Pop Stage",
                 Description = "Description"
             };
-            _stageRepositorySUT.InsertOrUpdate(stageModel2);
+            var res2 = _stageRepositorySUT.InsertOrUpdate(stageModel2);
 
             var model = new ScheduleDetailModel()
             {
@@ -125,15 +121,6 @@ namespace ICSproj.BL.Tests
             };
             _scheduleRepositorySUT.InsertOrUpdate(model2);
 
-            stageModel.Description = "This is the best stage ever";
-            stageModel.Schedule = new List<ScheduleDetailModel> { model, model2 };
-
-            stageModel2.Description = "Another best stage";
-            stageModel2.Schedule = new List<ScheduleDetailModel> { model, model2 };
-
-            var res1 = _stageRepositorySUT.InsertOrUpdate(stageModel);
-            var res2 = _stageRepositorySUT.InsertOrUpdate(stageModel2);
-
             Assert.NotNull(res1);
             Assert.NotNull(res2);
 
@@ -145,7 +132,18 @@ namespace ICSproj.BL.Tests
             Assert.Equal(res2.Name, returnedModel2.Name);
         }
 
-        
+        [Fact]
+        public void Get_By_Name()
+        {
+            var stageModel = new StageDetailModel()
+            {
+                Name = "This stage",
+                Description = "Description"
+            };
+            var returnedModel = _stageRepositorySUT.InsertOrUpdate(stageModel);
+            var returnedStage = _stageRepositorySUT.GetByName(stageModel.Name);
+            Assert.Equal(returnedStage.Id, returnedModel.Id);
+        }
 
         [Fact]
         public void Delete_ShouldDelete()
@@ -165,7 +163,7 @@ namespace ICSproj.BL.Tests
                 Name = "This stage",
                 Description = "Description"
             };
-            _stageRepositorySUT.InsertOrUpdate(stageModel);
+            var returnedModel = _stageRepositorySUT.InsertOrUpdate(stageModel);
 
             var scheduleModel = new ScheduleDetailModel()
             {
@@ -175,9 +173,7 @@ namespace ICSproj.BL.Tests
                 PerformanceDuration = TimeSpan.FromMinutes(80),
             };
             _scheduleRepositorySUT.InsertOrUpdate(scheduleModel);
-            stageModel.Schedule = new List<ScheduleDetailModel> { scheduleModel };
 
-            var returnedModel = _stageRepositorySUT.InsertOrUpdate(stageModel);
             _stageRepositorySUT.Delete(returnedModel.Id);
 
             using var dbxAssert = _dbContextFactory.Create();
@@ -203,7 +199,7 @@ namespace ICSproj.BL.Tests
                 Name = "Random",
                 Description = "Description"
             };
-            _stageRepositorySUT.InsertOrUpdate(stageModel);
+            var returnedModel = _stageRepositorySUT.InsertOrUpdate(stageModel);
 
             var scheduleModel = new ScheduleDetailModel()
             {
@@ -213,9 +209,6 @@ namespace ICSproj.BL.Tests
                 PerformanceDuration = TimeSpan.FromMinutes(80),
             };
             var retSched = _scheduleRepositorySUT.InsertOrUpdate(scheduleModel);
-            stageModel.Schedule = new List<ScheduleDetailModel> { scheduleModel };
-
-            var returnedModel = _stageRepositorySUT.InsertOrUpdate(stageModel);
 
             var result = _stageRepositorySUT.Delete(retSched.BandId); //WrongID
             Assert.False(result);
@@ -228,7 +221,7 @@ namespace ICSproj.BL.Tests
         [Fact]
         public void InsertOrUpdate_ShouldAdd()
         {
-            //Seed();
+            Seed();
             var stageModel = new StageDetailModel()
             {
                 Name = "Nonexistent",
@@ -238,6 +231,51 @@ namespace ICSproj.BL.Tests
             var returnedModel = _stageRepositorySUT.InsertOrUpdate(stageModel);
             Assert.NotNull(returnedModel);
             Assert.Equal(4, _stageRepositorySUT.GetAll().Count());
+        }
+
+        [Fact]
+        public void InsertOrUpdate_ShouldNotAdd()
+        {
+            Seed();
+            var stageModel = new StageDetailModel()
+            {
+                Name = "Nonexistent",
+                Description = "Description",
+            };
+
+            var returnedModel = _stageRepositorySUT.InsertOrUpdate(stageModel);
+            Assert.Equal(3, _stageRepositorySUT.GetAll().Count());
+        }
+
+        [Fact]
+        public void InsertOrUpdate_ShouldUpdate()
+        {
+            Seed();
+
+            var stageModel = new StageDetailModel()
+            {
+                Name = "Stage Name",
+                Description = "Description"
+            };
+
+            var returnedModel = _stageRepositorySUT.InsertOrUpdate(stageModel);
+            Assert.NotNull(returnedModel);
+            Assert.Equal(3, _stageRepositorySUT.GetAll().Count());
+        }
+
+        [Fact]
+        public void GetAll()
+        {
+            Seed();
+            var returned = _stageRepositorySUT.GetAll();
+            Assert.Equal(3, returned.Count());
+        }
+
+        [Fact]
+        public void GetAll_Empty()
+        {
+            var returned = _stageRepositorySUT.GetAll();
+            Assert.Empty(returned);
         }
 
         private void Seed()
@@ -316,14 +354,6 @@ namespace ICSproj.BL.Tests
                 PerformanceDateTime = DateTime.Today
             };
             var returnedModel3 = _scheduleRepositorySUT.InsertOrUpdate(scheduleModel3);
-
-            stageModel.Schedule = new List<ScheduleDetailModel> { scheduleModel1, scheduleModel2 };
-            stageModel2.Schedule = new List<ScheduleDetailModel> { scheduleModel2, scheduleModel3 };
-            stageModel3.Schedule = new List<ScheduleDetailModel> { scheduleModel1, scheduleModel2, scheduleModel3 };
-
-            var res1 = _stageRepositorySUT.InsertOrUpdate(stageModel);
-            var res2 = _stageRepositorySUT.InsertOrUpdate(stageModel2);
-            var res3 = _stageRepositorySUT.InsertOrUpdate(stageModel3);
 
         }
         public void Dispose()
