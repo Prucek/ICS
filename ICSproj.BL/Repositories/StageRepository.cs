@@ -40,7 +40,8 @@ namespace ICSproj.BL.Repositories
         {
             using var dbContext = _dbContextFactory.Create();
 
-            StageEntity entity = dbContext.Stages.Include(x => x.PerformanceMapping)
+            StageEntity entity = dbContext.Stages.Include(x => x.Photos)
+                .Include(x => x.PerformanceMapping)
                 .ThenInclude(x => x.Band)
                 .Single(t => t.Id == id);
 

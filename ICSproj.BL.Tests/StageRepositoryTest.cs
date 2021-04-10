@@ -128,8 +128,10 @@ namespace ICSproj.BL.Tests
             var returnedModel2 = _stageRepositorySUT.GetById(res2.Id);
 
             Assert.Equal(res1.Name, returnedModel.Name);
-
             Assert.Equal(res2.Name, returnedModel2.Name);
+
+            Assert.Equal(1, returnedModel.Schedule.Count);
+            Assert.Equal(1, returnedModel2.Schedule.Count);
         }
 
         [Fact]
@@ -143,6 +145,8 @@ namespace ICSproj.BL.Tests
             var returnedModel = _stageRepositorySUT.InsertOrUpdate(stageModel);
             var returnedStage = _stageRepositorySUT.GetByName(stageModel.Name);
             Assert.Equal(returnedStage.Id, returnedModel.Id);
+            Assert.Equal(returnedStage.Photos.Count(), returnedModel.Photos.Count());
+            Assert.Equal(returnedStage.Schedule.Count(), returnedModel.Schedule.Count());
         }
 
         [Fact]
