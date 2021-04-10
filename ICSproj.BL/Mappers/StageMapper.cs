@@ -64,19 +64,12 @@ namespace ICSproj.BL.Mappers
                 entityPhotos.AddRange(model.Photos.Select(item => PhotoMapper.MapPhotoDetailModelToEntity(item)));
             }
 
-            //var entitySchedule = new List<ScheduleEntity>();
-            //if (model.Schedule != null)
-            //{
-            //    entitySchedule.AddRange(model.Schedule.Select(item => ScheduleMapper.MapScheduleDetailModelToEntity(item, item.BandId, item.StageId)));
-            //}
-
             return new StageEntity
             {
                 Id = model.Id,
                 Name = model.Name,
                 Description = model.Description,
                 Photos = entityPhotos,
-                //PerformanceMapping = entitySchedule
             };
         }
     }

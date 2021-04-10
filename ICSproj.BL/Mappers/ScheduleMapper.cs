@@ -34,11 +34,9 @@ namespace ICSproj.BL.Mappers
                 BandId = entity.BandId,
                 BandName = entity.Band.Name,
                 BandDescription = entity.Band.Description,
-                //Band = BandMapper.MapBandEntityToDetailModel(entity.Band),
                 StageId = entity.StageId,
                 StageName = entity.Stage.Name,
                 StageDescription = entity.Stage.Description,
-                //Stage = StageMapper.MapStageEntityToDetailModel(entity.Stage),
                 PerformanceDateTime = entity.PerformanceDateTime,
                 PerformanceDuration = entity.PerformanceDuration
             };

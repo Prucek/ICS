@@ -130,8 +130,8 @@ namespace ICSproj.BL.Tests
             Assert.Equal(res1.Name, returnedModel.Name);
             Assert.Equal(res2.Name, returnedModel2.Name);
 
-            Assert.Equal(1, returnedModel.Schedule.Count);
-            Assert.Equal(1, returnedModel2.Schedule.Count);
+            Assert.Single(returnedModel.Schedule);
+            Assert.Single(returnedModel2.Schedule);
         }
 
         [Fact]
