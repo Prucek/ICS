@@ -67,7 +67,7 @@ namespace ICSproj.BL.Tests
                 Genre = "Jazz",
                 OriginCountry = "UK"
             };
-             _bandRepositorySUT.InsertOrUpdate(bandModel);
+            _bandRepositorySUT.InsertOrUpdate(bandModel);
 
             var bandModel2 = new BandDetailModel()
             {
@@ -113,7 +113,7 @@ namespace ICSproj.BL.Tests
 
             Assert.NotNull(returnedModel);
             var result = _scheduleRepositorySUT.GetById(returnedModel.Id);
-            Assert.Equal(result.BandName,returnedModel.BandName);
+            Assert.Equal(result.BandName, returnedModel.BandName);
             Assert.Equal(result.StageName, returnedModel.StageName);
 
             Assert.NotNull(returnedModel2);
@@ -126,16 +126,18 @@ namespace ICSproj.BL.Tests
         public void InsertOrUpdate_ShouldAdd()
         {
             Seed();
-            
+
             var scheduleModel = new ScheduleDetailModel()
             {
                 BandName = "Svieca vo vetre",
                 StageName = "Bar",
                 PerformanceDuration = TimeSpan.FromMinutes(90),
-                PerformanceDateTime = DateTime.Now
+                PerformanceDateTime = DateTime.Today + TimeSpan.FromDays(1)
             };
             var returnedModel = _scheduleRepositorySUT.InsertOrUpdate(scheduleModel);
-            Assert.Equal(4,_scheduleRepositorySUT.GetAll().Count());
+            Assert.Equal(4, _scheduleRepositorySUT.GetAll().Count());
+            Assert.Equal(3, _stageRepositorySUT.GetAll().Count());
+            Assert.Equal(3, _bandRepositorySUT.GetAll().Count());
         }
 
         [Fact]
@@ -153,6 +155,8 @@ namespace ICSproj.BL.Tests
             var returnedModel = _scheduleRepositorySUT.InsertOrUpdate(scheduleModel);
             Assert.Null(returnedModel);
             Assert.Equal(3, _scheduleRepositorySUT.GetAll().Count());
+            Assert.Equal(3, _stageRepositorySUT.GetAll().Count());
+            Assert.Equal(3, _bandRepositorySUT.GetAll().Count());
         }
 
         [Fact]
@@ -169,6 +173,8 @@ namespace ICSproj.BL.Tests
             };
             var returnedModel = _scheduleRepositorySUT.InsertOrUpdate(scheduleModel);
             Assert.NotNull(returnedModel);
+            Assert.Equal(3, _stageRepositorySUT.GetAll().Count());
+            Assert.Equal(3, _bandRepositorySUT.GetAll().Count());
             Assert.Equal(3, _scheduleRepositorySUT.GetAll().Count());
         }
 
@@ -182,7 +188,7 @@ namespace ICSproj.BL.Tests
                 StageName = "Stage Name",
                 PerformanceDateTime = DateTime.Today
             };
-            
+
             _scheduleRepositorySUT.DeleteByModel(scheduleModel);
             Assert.Equal(2, _scheduleRepositorySUT.GetAll().Count());
         }
@@ -198,7 +204,7 @@ namespace ICSproj.BL.Tests
                 PerformanceDateTime = DateTime.Today + TimeSpan.FromDays(1) // Tomorrow
             };
 
-            var returnedModel=_scheduleRepositorySUT.DeleteByModel(scheduleModel);
+            var returnedModel = _scheduleRepositorySUT.DeleteByModel(scheduleModel);
             Assert.False(returnedModel);
             Assert.Equal(3, _scheduleRepositorySUT.GetAll().Count());
         }
@@ -278,7 +284,7 @@ namespace ICSproj.BL.Tests
         {
             Seed();
             var returned = _scheduleRepositorySUT.GetAll();
-            Assert.Equal(3,returned.Count());
+            Assert.Equal(3, returned.Count());
         }
 
         [Fact]
@@ -302,10 +308,10 @@ namespace ICSproj.BL.Tests
             var returnedModel = _scheduleRepositorySUT.InsertOrUpdate(scheduleModel);
 
             using var dbxAssert = _dbContextFactory.Create();
-            Assert.Equal(4,dbxAssert.Schedule.Count());
+            Assert.Equal(4, dbxAssert.Schedule.Count());
 
             var band = _bandRepositorySUT.GetById(returnedModel.BandId);
-            Assert.Equal(2,band.Schedule.Count);
+            Assert.Equal(2, band.Schedule.Count);
 
             var stage = _stageRepositorySUT.GetById(returnedModel.StageId);
             Assert.Equal(2, stage.Schedule.Count);

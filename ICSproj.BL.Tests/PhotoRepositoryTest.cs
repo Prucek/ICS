@@ -23,7 +23,7 @@ namespace ICSproj.BL.Tests
 
         public PhotoRepositoryTest()
         {
-            _dbContextFactory = new DbContextInMemoryFactory(nameof(StageRepositoryTest));
+            _dbContextFactory = new DbContextInMemoryFactory(nameof(PhotoRepositoryTest));
             using var dbx = _dbContextFactory.Create();
             dbx.Database.EnsureCreated();
 

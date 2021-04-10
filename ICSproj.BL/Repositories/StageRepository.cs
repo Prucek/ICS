@@ -22,25 +22,41 @@ namespace ICSproj.BL.Repositories
 
         public StageDetailModel InsertOrUpdate(StageDetailModel model)
         {
-            var entity = new StageEntity();
+            //var entity = new StageEntity();
+            //using var dbContext = _dbContextFactory.Create();
+
+            //if (dbContext.Stages.Count() != 0)
+            //{
+            //   entity = dbContext.Stages.Include(x => x.PerformanceMapping)
+            //        .ThenInclude(x => x.Band)
+            //        .SingleOrDefault(t => t.Name == model.Name);
+            //    //entity = dbContext.Stages.SingleOrDefault(t => t.Name == model.Name);
+            //}
+            //else
+            //{
+            //    entity = StageMapper.MapStageDetailModelToEntity(model);
+            //}
+
+            //if (entity == null) return null;
+
+            //dbContext.Stages.Update(entity);
+            //dbContext.SaveChanges();
+
+            //return StageMapper.MapStageEntityToDetailModel(entity);
             using var dbContext = _dbContextFactory.Create();
-            
-            if (dbContext.Stages.Count() != 0)
-            {
-                entity = dbContext.Stages.SingleOrDefault(t => t.Name == model.Name);
-            }
-            else
+
+            //var entity = StageMapper.MapStageDetailModelToEntity(model);
+            var entity = dbContext.Stages.SingleOrDefault(x => x.Name == model.Name);
+
+            if (entity == null)
             {
                 entity = StageMapper.MapStageDetailModelToEntity(model);
             }
-
-            if (entity == null) return null;
 
             dbContext.Stages.Update(entity);
             dbContext.SaveChanges();
 
             return StageMapper.MapStageEntityToDetailModel(entity);
-
             //var entity = StageMapper.MapStageDetailModelToEntity(t => t.Id == model.Id);
             //if ( to_check != null)
             //{
@@ -56,7 +72,9 @@ namespace ICSproj.BL.Repositories
         {
             using var dbContext = _dbContextFactory.Create();
 
-            StageEntity entity = dbContext.Stages.Single(t => t.Id == id);
+            StageEntity entity = dbContext.Stages.Include(x => x.PerformanceMapping)
+                .ThenInclude(x => x.Band)
+                .Single(t => t.Id == id);
 
             return StageMapper.MapStageEntityToDetailModel(entity);
         }

@@ -109,22 +109,25 @@ namespace ICSproj.BL.Repositories
         {
             using var dbContext = _dbContextFactory.Create();
 
-
             if (!CanBePerformed(model))
             {
                 return null;
             }
 
-            var entity = ScheduleMapper.MapScheduleDetailModelToEntity(model, 
+            var entity = dbContext.Schedule
+                .SingleOrDefault(x => x.Band.Name == model.BandName && x.Stage.Name == model.StageName);
+
+            var band = dbContext.Bands.SingleOrDefault(t => t.Name == model.BandName);
+            var stage = dbContext.Stages.SingleOrDefault(t => t.Name == model.StageName);
+
+            if (band == null || stage == null)
+                return null;
+
+            entity ??= ScheduleMapper.MapScheduleDetailModelToEntity(model,
                 dbContext.Bands.Single(t => t.Name == model.BandName),
                 dbContext.Stages.Single(t => t.Name == model.StageName));
 
-            if (entity == null) return null;
-
-            var band = dbContext.Bands.Single(t => t.Name == model.BandName);
             band.PerformanceMapping.Add(entity);
-
-            var stage = dbContext.Stages.Single(t => t.Name == model.StageName);
             stage.PerformanceMapping.Add(entity);
 
             dbContext.Schedule.Update(entity);

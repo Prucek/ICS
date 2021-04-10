@@ -218,34 +218,21 @@ namespace ICSproj.BL.Tests
         }
 
 
-        [Fact]
-        public void InsertOrUpdate_ShouldAdd()
-        {
-            Seed();
-            var stageModel = new StageDetailModel()
-            {
-                Name = "Nonexistent",
-                Description = "Description",
-            };
+        
 
-            var returnedModel = _stageRepositorySUT.InsertOrUpdate(stageModel);
-            Assert.NotNull(returnedModel);
-            Assert.Equal(4, _stageRepositorySUT.GetAll().Count());
-        }
+        //[Fact]
+        //public void InsertOrUpdate_ShouldNotAdd()
+        //{
+        //    Seed();
+        //    var stageModel = new StageDetailModel()
+        //    {
+        //        Name = "Nonexistent",
+        //        Description = "Description",
+        //    };
 
-        [Fact]
-        public void InsertOrUpdate_ShouldNotAdd()
-        {
-            Seed();
-            var stageModel = new StageDetailModel()
-            {
-                Name = "Nonexistent",
-                Description = "Description",
-            };
-
-            var returnedModel = _stageRepositorySUT.InsertOrUpdate(stageModel);
-            Assert.Equal(3, _stageRepositorySUT.GetAll().Count());
-        }
+        //    var returnedModel = _stageRepositorySUT.InsertOrUpdate(stageModel);
+        //    Assert.Equal(3, _stageRepositorySUT.GetAll().Count());
+        //}
 
         [Fact]
         public void InsertOrUpdate_ShouldUpdate()
@@ -261,6 +248,31 @@ namespace ICSproj.BL.Tests
             var returnedModel = _stageRepositorySUT.InsertOrUpdate(stageModel);
             Assert.NotNull(returnedModel);
             Assert.Equal(3, _stageRepositorySUT.GetAll().Count());
+        }
+
+        [Fact]
+        public void InsertOrUpdate_ShouldAdd()
+        {
+            //using var dbxAssert = _dbContextFactory.Create();
+
+            Seed();
+            Assert.Equal(3, _scheduleRepositorySUT.GetAll().Count());
+            Assert.Equal(3, _stageRepositorySUT.GetAll().Count());
+            Assert.Equal(3, _bandRepositorySUT.GetAll().Count());
+
+            var stageModel = new StageDetailModel()
+            {
+                Name = "Nonexistent",
+                Description = "Description",
+            };
+
+
+
+            var returnedModel = _stageRepositorySUT.InsertOrUpdate(stageModel);
+            //Assert.True(dbxAssert.Stages.Any(i => i.Id == returnedModel.Id));
+            Assert.NotNull(returnedModel);
+            Assert.Equal(4, _stageRepositorySUT.GetAll().Count());
+
         }
 
         [Fact]
