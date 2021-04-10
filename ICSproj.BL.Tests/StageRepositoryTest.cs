@@ -217,23 +217,6 @@ namespace ICSproj.BL.Tests
             Assert.True(dbxAssert.Stages.Any(i => i.Id == returnedModel.Id));
         }
 
-
-        
-
-        //[Fact]
-        //public void InsertOrUpdate_ShouldNotAdd()
-        //{
-        //    Seed();
-        //    var stageModel = new StageDetailModel()
-        //    {
-        //        Name = "Nonexistent",
-        //        Description = "Description",
-        //    };
-
-        //    var returnedModel = _stageRepositorySUT.InsertOrUpdate(stageModel);
-        //    Assert.Equal(3, _stageRepositorySUT.GetAll().Count());
-        //}
-
         [Fact]
         public void InsertOrUpdate_ShouldUpdate()
         {
@@ -253,7 +236,6 @@ namespace ICSproj.BL.Tests
         [Fact]
         public void InsertOrUpdate_ShouldAdd()
         {
-            //using var dbxAssert = _dbContextFactory.Create();
 
             Seed();
             Assert.Equal(3, _scheduleRepositorySUT.GetAll().Count());
@@ -266,10 +248,7 @@ namespace ICSproj.BL.Tests
                 Description = "Description",
             };
 
-
-
             var returnedModel = _stageRepositorySUT.InsertOrUpdate(stageModel);
-            //Assert.True(dbxAssert.Stages.Any(i => i.Id == returnedModel.Id));
             Assert.NotNull(returnedModel);
             Assert.Equal(4, _stageRepositorySUT.GetAll().Count());
 

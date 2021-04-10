@@ -22,30 +22,7 @@ namespace ICSproj.BL.Repositories
 
         public StageDetailModel InsertOrUpdate(StageDetailModel model)
         {
-            //var entity = new StageEntity();
-            //using var dbContext = _dbContextFactory.Create();
-
-            //if (dbContext.Stages.Count() != 0)
-            //{
-            //   entity = dbContext.Stages.Include(x => x.PerformanceMapping)
-            //        .ThenInclude(x => x.Band)
-            //        .SingleOrDefault(t => t.Name == model.Name);
-            //    //entity = dbContext.Stages.SingleOrDefault(t => t.Name == model.Name);
-            //}
-            //else
-            //{
-            //    entity = StageMapper.MapStageDetailModelToEntity(model);
-            //}
-
-            //if (entity == null) return null;
-
-            //dbContext.Stages.Update(entity);
-            //dbContext.SaveChanges();
-
-            //return StageMapper.MapStageEntityToDetailModel(entity);
             using var dbContext = _dbContextFactory.Create();
-
-            //var entity = StageMapper.MapStageDetailModelToEntity(model);
             var entity = dbContext.Stages.SingleOrDefault(x => x.Name == model.Name);
 
             if (entity == null)
@@ -57,15 +34,6 @@ namespace ICSproj.BL.Repositories
             dbContext.SaveChanges();
 
             return StageMapper.MapStageEntityToDetailModel(entity);
-            //var entity = StageMapper.MapStageDetailModelToEntity(t => t.Id == model.Id);
-            //if ( to_check != null)
-            //{
-            //    entity = dbContext.Stages.Single(t => t.Name == model.Name);
-            //}
-            //else
-            //{
-            //}
-            //using var dbContext = _dbContextFactory.Create();
         }
 
         public StageDetailModel GetById(Guid id)
