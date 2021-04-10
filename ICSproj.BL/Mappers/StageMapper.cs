@@ -27,6 +27,11 @@ namespace ICSproj.BL.Mappers
             };
         }
 
+        internal static object MapStageDetailModelToEntity(Func<object, bool> p)
+        {
+            throw new NotImplementedException();
+        }
+
         public static StageDetailModel MapStageEntityToDetailModel(StageEntity entity)
         {
             var modelPhotos = new List<PhotoDetailModel>();
@@ -59,19 +64,12 @@ namespace ICSproj.BL.Mappers
                 entityPhotos.AddRange(model.Photos.Select(item => PhotoMapper.MapPhotoDetailModelToEntity(item)));
             }
 
-            var entitySchedule = new List<ScheduleEntity>();
-            if (model.Schedule != null)
-            {
-                entitySchedule.AddRange(model.Schedule.Select(item => ScheduleMapper.MapScheduleDetailModelToEntity(item)));
-            }
-
             return new StageEntity
             {
                 Id = model.Id,
                 Name = model.Name,
                 Description = model.Description,
                 Photos = entityPhotos,
-                PerformanceMapping = entitySchedule
             };
         }
     }

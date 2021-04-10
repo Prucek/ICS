@@ -14,6 +14,7 @@ namespace ICSproj.DAL.Factories
 
         public DbSet<BandEntity> Bands { get; set; }
         public DbSet<StageEntity> Stages { get; set; }
-        public DbSet<ScheduleEntity> Program { get; set; }
+        public DbSet<ScheduleEntity> Schedule { get; set; }
+        public DbSet<PhotoEntity> Photos { get; set; }
     }
 }

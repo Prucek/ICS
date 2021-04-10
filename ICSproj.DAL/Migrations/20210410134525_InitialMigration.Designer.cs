@@ -4,14 +4,16 @@ using ICSproj.DAL.Factories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace ICSproj.Migrations
+namespace ICSproj.DAL.Migrations
 {
     [DbContext(typeof(FestivalDbContext))]
-    partial class FestivalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210410134525_InitialMigration")]
+    partial class InitialMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -19,7 +21,7 @@ namespace ICSproj.Migrations
                 .HasAnnotation("ProductVersion", "5.0.3")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("ICSproj.Entities.BandEntity", b =>
+            modelBuilder.Entity("ICSproj.DAL.Entities.BandEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -45,7 +47,7 @@ namespace ICSproj.Migrations
                     b.ToTable("Bands");
                 });
 
-            modelBuilder.Entity("ICSproj.Entities.PhotoEntity", b =>
+            modelBuilder.Entity("ICSproj.DAL.Entities.PhotoEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -54,8 +56,14 @@ namespace ICSproj.Migrations
                     b.Property<Guid?>("BandEntityId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("SrcPath")
+                    b.Property<string>("Extension")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("Photo")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<int>("Size")
+                        .HasColumnType("int");
 
                     b.Property<Guid?>("StageEntityId")
                         .HasColumnType("uniqueidentifier");
@@ -66,10 +74,10 @@ namespace ICSproj.Migrations
 
                     b.HasIndex("StageEntityId");
 
-                    b.ToTable("PhotoEntity");
+                    b.ToTable("Photos");
                 });
 
-            modelBuilder.Entity("ICSproj.Entities.ScheduleEntity", b =>
+            modelBuilder.Entity("ICSproj.DAL.Entities.ScheduleEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -93,10 +101,10 @@ namespace ICSproj.Migrations
 
                     b.HasIndex("StageId");
 
-                    b.ToTable("Program");
+                    b.ToTable("Schedule");
                 });
 
-            modelBuilder.Entity("ICSproj.Entities.StageEntity", b =>
+            modelBuilder.Entity("ICSproj.DAL.Entities.StageEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -113,26 +121,26 @@ namespace ICSproj.Migrations
                     b.ToTable("Stages");
                 });
 
-            modelBuilder.Entity("ICSproj.Entities.PhotoEntity", b =>
+            modelBuilder.Entity("ICSproj.DAL.Entities.PhotoEntity", b =>
                 {
-                    b.HasOne("ICSproj.Entities.BandEntity", null)
+                    b.HasOne("ICSproj.DAL.Entities.BandEntity", null)
                         .WithMany("Photos")
                         .HasForeignKey("BandEntityId");
 
-                    b.HasOne("ICSproj.Entities.StageEntity", null)
+                    b.HasOne("ICSproj.DAL.Entities.StageEntity", null)
                         .WithMany("Photos")
                         .HasForeignKey("StageEntityId");
                 });
 
-            modelBuilder.Entity("ICSproj.Entities.ScheduleEntity", b =>
+            modelBuilder.Entity("ICSproj.DAL.Entities.ScheduleEntity", b =>
                 {
-                    b.HasOne("ICSproj.Entities.BandEntity", "Band")
+                    b.HasOne("ICSproj.DAL.Entities.BandEntity", "Band")
                         .WithMany("PerformanceMapping")
                         .HasForeignKey("BandId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ICSproj.Entities.StageEntity", "Stage")
+                    b.HasOne("ICSproj.DAL.Entities.StageEntity", "Stage")
                         .WithMany("PerformanceMapping")
                         .HasForeignKey("StageId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -143,14 +151,14 @@ namespace ICSproj.Migrations
                     b.Navigation("Stage");
                 });
 
-            modelBuilder.Entity("ICSproj.Entities.BandEntity", b =>
+            modelBuilder.Entity("ICSproj.DAL.Entities.BandEntity", b =>
                 {
                     b.Navigation("PerformanceMapping");
 
                     b.Navigation("Photos");
                 });
 
-            modelBuilder.Entity("ICSproj.Entities.StageEntity", b =>
+            modelBuilder.Entity("ICSproj.DAL.Entities.StageEntity", b =>
                 {
                     b.Navigation("PerformanceMapping");
 

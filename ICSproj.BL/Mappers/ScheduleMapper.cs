@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ICSproj.BL.Models;
+using ICSproj.BL.Repositories;
 using ICSproj.DAL.Entities;
+using ICSproj.DAL.Factories;
 
 namespace ICSproj.BL.Mappers
 {
@@ -17,10 +19,8 @@ namespace ICSproj.BL.Mappers
                 Id = entity.Id,
                 BandId = entity.Band.Id,
                 BandName = entity.Band.Name,
-                BandDescription = entity.Band.Description,
                 StageId = entity.Stage.Id,
                 StageName = entity.Stage.Name,
-                StageDescription = entity.Stage.Description,
                 PerformanceDateTime = entity.PerformanceDateTime,
                 PerformanceDuration = entity.PerformanceDuration
             };
@@ -32,23 +32,25 @@ namespace ICSproj.BL.Mappers
             {
                 Id = entity.Id,
                 BandId = entity.BandId,
-                Band = BandMapper.MapBandEntityToDetailModel(entity.Band),
+                BandName = entity.Band.Name,
+                BandDescription = entity.Band.Description,
                 StageId = entity.StageId,
-                Stage = StageMapper.MapStageEntityToDetailModel(entity.Stage),
+                StageName = entity.Stage.Name,
+                StageDescription = entity.Stage.Description,
                 PerformanceDateTime = entity.PerformanceDateTime,
                 PerformanceDuration = entity.PerformanceDuration
             };
         }
 
-        public static ScheduleEntity MapScheduleDetailModelToEntity(ScheduleDetailModel model)
+        public static ScheduleEntity MapScheduleDetailModelToEntity(ScheduleDetailModel model, BandEntity band, StageEntity stage)
         {
             return new ScheduleEntity
             {
                 Id = model.Id,
-                BandId = model.BandId,
-                Band = BandMapper.MapBandDetailModelToEntity(model.Band),
+                BandId = model.BandId, 
+                Band = band,
                 StageId = model.StageId,
-                Stage = StageMapper.MapStageDetailModelToEntity(model.Stage),
+                Stage = stage,
                 PerformanceDateTime = model.PerformanceDateTime,
                 PerformanceDuration = model.PerformanceDuration
             };

@@ -6,6 +6,15 @@ namespace ICSproj.DAL.Entities
 {
     public class StageEntity : BaseEntity, IFestivalEntity, IEquatable<StageEntity>
     {
+
+        public StageEntity(Guid id)
+        {
+            Id = id;
+        }
+
+        public StageEntity()
+        { }
+
         public string Name { get; set; }
         public string Description { get; set; }
         public ICollection<PhotoEntity> Photos { get; set; } = new List<PhotoEntity>();

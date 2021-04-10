@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace ICSproj.Migrations
+namespace ICSproj.DAL.Migrations
 {
     public partial class InitialMigration : Migration
     {
@@ -15,7 +15,7 @@ namespace ICSproj.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Genre = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Origin = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    OriginCountry = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DescriptionLong = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -37,25 +37,27 @@ namespace ICSproj.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PhotoEntity",
+                name: "Photos",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    SrcPath = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Photo = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
+                    Extension = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Size = table.Column<int>(type: "int", nullable: false),
                     BandEntityId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     StageEntityId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PhotoEntity", x => x.Id);
+                    table.PrimaryKey("PK_Photos", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PhotoEntity_Bands_BandEntityId",
+                        name: "FK_Photos_Bands_BandEntityId",
                         column: x => x.BandEntityId,
                         principalTable: "Bands",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_PhotoEntity_Stages_StageEntityId",
+                        name: "FK_Photos_Stages_StageEntityId",
                         column: x => x.StageEntityId,
                         principalTable: "Stages",
                         principalColumn: "Id",
@@ -63,7 +65,7 @@ namespace ICSproj.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Program",
+                name: "Schedule",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -74,15 +76,15 @@ namespace ICSproj.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Program", x => x.Id);
+                    table.PrimaryKey("PK_Schedule", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Program_Bands_BandId",
+                        name: "FK_Schedule_Bands_BandId",
                         column: x => x.BandId,
                         principalTable: "Bands",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Program_Stages_StageId",
+                        name: "FK_Schedule_Stages_StageId",
                         column: x => x.StageId,
                         principalTable: "Stages",
                         principalColumn: "Id",
@@ -90,33 +92,33 @@ namespace ICSproj.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_PhotoEntity_BandEntityId",
-                table: "PhotoEntity",
+                name: "IX_Photos_BandEntityId",
+                table: "Photos",
                 column: "BandEntityId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PhotoEntity_StageEntityId",
-                table: "PhotoEntity",
+                name: "IX_Photos_StageEntityId",
+                table: "Photos",
                 column: "StageEntityId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Program_BandId",
-                table: "Program",
+                name: "IX_Schedule_BandId",
+                table: "Schedule",
                 column: "BandId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Program_StageId",
-                table: "Program",
+                name: "IX_Schedule_StageId",
+                table: "Schedule",
                 column: "StageId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "PhotoEntity");
+                name: "Photos");
 
             migrationBuilder.DropTable(
-                name: "Program");
+                name: "Schedule");
 
             migrationBuilder.DropTable(
                 name: "Bands");

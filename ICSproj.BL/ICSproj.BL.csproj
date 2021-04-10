@@ -5,11 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ICSproj\ICSproj.DAL.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Repositories\" />
+    <ProjectReference Include="..\ICSproj.DAL\ICSproj.DAL.csproj" />
   </ItemGroup>
 
 </Project>
