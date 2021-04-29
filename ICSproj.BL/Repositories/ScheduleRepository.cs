@@ -22,7 +22,7 @@ namespace ICSproj.BL.Repositories
         }
 
 
-        public IEnumerable<ScheduleListModel> GetAll()
+        public ICollection<ScheduleListModel> GetAll()
         {
             using var dbContext = _dbContextFactory.Create();
             
@@ -42,7 +42,7 @@ namespace ICSproj.BL.Repositories
             return ScheduleMapper.MapScheduleEntityToDetailModel(entity);
         }
 
-        public IEnumerable<ScheduleDetailModel> GetByStageName(ScheduleDetailModel model)
+        private IEnumerable<ScheduleDetailModel> GetByStageName(string stageName)
         {
             using var dbContext = _dbContextFactory.Create();
 
@@ -52,7 +52,7 @@ namespace ICSproj.BL.Repositories
                 retVal = dbContext.Schedule.Include(x => x.Band)
                     .Include(x => x.Stage)
                     .Select(e => ScheduleMapper.MapScheduleEntityToDetailModel(e)).ToArray()
-                    .Where(t => t.StageName == model.StageName);
+                    .Where(t => t.StageName == stageName);
             }
             catch (Exception e)
             {
@@ -83,9 +83,9 @@ namespace ICSproj.BL.Repositories
 
         private bool CanBePerformed(ScheduleDetailModel model)
         {
-            var check = GetByStageName(model).ToList();
+            var scheduleDetailModels = GetByStageName(model.StageName);
 
-            foreach (var t in check.Where(t => 
+            foreach (var t in scheduleDetailModels.Where(t => 
                     (t.PerformanceDateTime < model.PerformanceDateTime &&
                                                     t.PerformanceDateTime + t.PerformanceDuration > model.PerformanceDateTime)  
                     // model starts in another performance

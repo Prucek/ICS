@@ -27,11 +27,6 @@ namespace ICSproj.BL.Mappers
             };
         }
 
-        internal static object MapStageDetailModelToEntity(Func<object, bool> p)
-        {
-            throw new NotImplementedException();
-        }
-
         public static StageDetailModel MapStageEntityToDetailModel(StageEntity entity)
         {
             var modelPhotos = new List<PhotoDetailModel>();

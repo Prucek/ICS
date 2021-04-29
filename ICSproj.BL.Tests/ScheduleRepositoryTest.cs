@@ -59,67 +59,24 @@ namespace ICSproj.BL.Tests
         [Fact]
         public void GetById_Create()
         {
-            var bandModel = new BandDetailModel()
-            {
-                Name = "Lorem Ipsum",
-                Description = "Description",
-                DescriptionLong = "Longer description",
-                Genre = "Jazz",
-                OriginCountry = "UK"
-            };
-            _bandRepositorySUT.InsertOrUpdate(bandModel);
+            Seed();
+            using var dbContext = _dbContextFactory.Create();
+            var band1 = dbContext.Bands.Single(x => x.Name == "Foo");
+            var band2 = dbContext.Bands.Single(x => x.Name == "Lorem Ipsum");
+            var stage1 = dbContext.Stages.Single(x => x.Name == "Bar");
+            var stage2 = dbContext.Stages.Single(x => x.Name == "Stage Name");
+            var schedule1 = dbContext.Schedule.Single(x => x.BandId == band1.Id && x.StageId == stage1.Id);
+            var schedule2 = dbContext.Schedule.Single(x => x.BandId == band2.Id && x.StageId == stage2.Id);
 
-            var bandModel2 = new BandDetailModel()
-            {
-                Name = "Foo",
-                Description = "Description",
-                DescriptionLong = "Longer description",
-                Genre = "Rock",
-                OriginCountry = "US"
-            };
-            _bandRepositorySUT.InsertOrUpdate(bandModel2);
+            Assert.NotNull(schedule1);
+            var result = _scheduleRepositorySUT.GetById(schedule1.Id);
+            Assert.Equal(result.BandName, band1.Name);
+            Assert.Equal(result.StageName, stage1.Name);
 
-            var stageModel = new StageDetailModel()
-            {
-                Name = "Stage Name",
-                Description = "Description"
-            };
-            _stageRepositorySUT.InsertOrUpdate(stageModel);
-
-            var stageModel2 = new StageDetailModel()
-            {
-                Name = "Bar",
-                Description = "Description"
-            };
-            _stageRepositorySUT.InsertOrUpdate(stageModel2);
-
-            var scheduleModel = new ScheduleDetailModel()
-            {
-                BandName = bandModel.Name,
-                StageName = stageModel.Name,
-                PerformanceDuration = TimeSpan.FromMinutes(90),
-                PerformanceDateTime = DateTime.Now
-            };
-            var returnedModel = _scheduleRepositorySUT.InsertOrUpdate(scheduleModel);
-
-            var scheduleModel2 = new ScheduleDetailModel()
-            {
-                BandName = bandModel2.Name,
-                StageName = stageModel2.Name,
-                PerformanceDuration = TimeSpan.FromMinutes(80),
-                PerformanceDateTime = DateTime.Now
-            };
-            var returnedModel2 = _scheduleRepositorySUT.InsertOrUpdate(scheduleModel2);
-
-            Assert.NotNull(returnedModel);
-            var result = _scheduleRepositorySUT.GetById(returnedModel.Id);
-            Assert.Equal(result.BandName, returnedModel.BandName);
-            Assert.Equal(result.StageName, returnedModel.StageName);
-
-            Assert.NotNull(returnedModel2);
-            var result2 = _scheduleRepositorySUT.GetById(returnedModel2.Id);
-            Assert.Equal(result2.BandName, returnedModel2.BandName);
-            Assert.Equal(result2.StageName, returnedModel2.StageName);
+            Assert.NotNull(schedule2);
+            result = _scheduleRepositorySUT.GetById(schedule2.Id);
+            Assert.Equal(result.BandName, band2.Name);
+            Assert.Equal(result.StageName, stage2.Name);
         }
 
         [Fact]

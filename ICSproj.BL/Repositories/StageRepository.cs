@@ -75,7 +75,7 @@ namespace ICSproj.BL.Repositories
             return true;
         }
 
-        public IEnumerable<StageListModel> GetAll()
+        public ICollection<StageListModel> GetAll()
         {
             using var dbContext = _dbContextFactory.Create();
 

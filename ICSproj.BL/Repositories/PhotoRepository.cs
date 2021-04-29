@@ -18,7 +18,7 @@ namespace ICSproj.BL.Repositories
         {
             _dbContextFactory = dbContextFactory;
         }
-        public IEnumerable<PhotoListModel> GetAll()
+        public ICollection<PhotoListModel> GetAll()
         {
             using var dbContext = _dbContextFactory.Create();
 

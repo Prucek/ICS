@@ -9,7 +9,7 @@ namespace ICSproj.BL.Repositories
 {
     public interface IRepository<TDetailModel, TListModel>
     {
-        IEnumerable<TListModel> GetAll();
+        ICollection<TListModel> GetAll();
         TDetailModel GetById(Guid id);
         TDetailModel InsertOrUpdate(TDetailModel model);
         bool Delete(Guid id);

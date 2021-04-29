@@ -33,105 +33,28 @@ namespace ICSproj.BL.Tests
         [Fact]
         public void InsertOrUpdate_Create()
         {
-            var band = new BandDetailModel()
-            {
-                Name = "21 pilots"
-            };
-            _bandRepositorySUT.InsertOrUpdate(band);
-
             var stage = new StageDetailModel()
             {
                 Name = "First"
             };
             var returnedModel = _stageRepositorySUT.InsertOrUpdate(stage);
 
-            var model = new ScheduleDetailModel()
-            {
-                BandName = band.Name,
-                StageName = stage.Name,
-                PerformanceDateTime = DateTime.Today,
-                PerformanceDuration = TimeSpan.FromHours(2)
-            };
-            _scheduleRepositorySUT.InsertOrUpdate(model);
-
-            var model2 = new ScheduleDetailModel()
-            {
-                BandName = band.Name,
-                StageName = stage.Name,
-                PerformanceDateTime = DateTime.Today,
-                PerformanceDuration = TimeSpan.FromHours(4)
-            };
-            _scheduleRepositorySUT.InsertOrUpdate(model2);
-
             Assert.NotNull(returnedModel);
         }
 
         [Fact]
-        public void GetById_Create()
+        public void GetById_Seed()
         {
-            var bandModel = new BandDetailModel()
-            {
-                Name = "The Roots",
-                Description = "Description",
-                DescriptionLong = "Longer description",
-                Genre = "Jazz",
-                OriginCountry = "US"
-            };
-            _bandRepositorySUT.InsertOrUpdate(bandModel);
+            Seed();
+            using var dbContext = _dbContextFactory.Create();
+            var stage1 = dbContext.Stages.Single(x => x.Name == "Bar");
+            var stage2 = dbContext.Stages.Single(x => x.Name == "Stage Name");
 
-            var bandModel2 = new BandDetailModel()
-            {
-                Name = "Foo Figthers",
-                Description = "Description",
-                DescriptionLong = "Longer description",
-                Genre = "Rock",
-                OriginCountry = "US"
-            };
-            _bandRepositorySUT.InsertOrUpdate(bandModel2);
+            var returnedModel = _stageRepositorySUT.GetById(stage1.Id);
+            var returnedModel2 = _stageRepositorySUT.GetById(stage2.Id);
 
-            var stageModel = new StageDetailModel()
-            {
-                Name = "Rock Stage",
-                Description = "Description"
-            };
-            var res1 = _stageRepositorySUT.InsertOrUpdate(stageModel);
-
-            var stageModel2 = new StageDetailModel()
-            {
-                Name = "Pop Stage",
-                Description = "Description"
-            };
-            var res2 = _stageRepositorySUT.InsertOrUpdate(stageModel2);
-
-            var model = new ScheduleDetailModel()
-            {
-                BandName = bandModel.Name,
-                StageName = stageModel.Name,
-                PerformanceDateTime = DateTime.Today,
-                PerformanceDuration = TimeSpan.FromHours(2)
-            };
-            _scheduleRepositorySUT.InsertOrUpdate(model);
-
-            var model2 = new ScheduleDetailModel()
-            {
-                BandName = bandModel2.Name,
-                StageName = stageModel2.Name,
-                PerformanceDateTime = DateTime.Today,
-                PerformanceDuration = TimeSpan.FromHours(4)
-            };
-            _scheduleRepositorySUT.InsertOrUpdate(model2);
-
-            Assert.NotNull(res1);
-            Assert.NotNull(res2);
-
-            var returnedModel = _stageRepositorySUT.GetById(res1.Id);
-            var returnedModel2 = _stageRepositorySUT.GetById(res2.Id);
-
-            Assert.Equal(res1.Name, returnedModel.Name);
-            Assert.Equal(res2.Name, returnedModel2.Name);
-
-            Assert.Single(returnedModel.Schedule);
-            Assert.Single(returnedModel2.Schedule);
+            Assert.NotNull(returnedModel);
+            Assert.NotNull(returnedModel2);
         }
 
         [Fact]
@@ -152,16 +75,6 @@ namespace ICSproj.BL.Tests
         [Fact]
         public void Delete_ShouldDelete()
         {
-            var bandModel = new BandDetailModel()
-            {
-                Name = "Random",
-                Description = "Description",
-                DescriptionLong = "Longer description",
-                Genre = "Metal",
-                OriginCountry = "DE"
-            };
-            _bandRepositorySUT.InsertOrUpdate(bandModel);
-
             var stageModel = new StageDetailModel()
             {
                 Name = "This stage",
@@ -169,20 +82,10 @@ namespace ICSproj.BL.Tests
             };
             var returnedModel = _stageRepositorySUT.InsertOrUpdate(stageModel);
 
-            var scheduleModel = new ScheduleDetailModel()
-            {
-                BandName = "Random",
-                StageName = stageModel.Name,
-                PerformanceDateTime = DateTime.Today,
-                PerformanceDuration = TimeSpan.FromMinutes(80),
-            };
-            _scheduleRepositorySUT.InsertOrUpdate(scheduleModel);
-
             _stageRepositorySUT.Delete(returnedModel.Id);
 
             using var dbxAssert = _dbContextFactory.Create();
             Assert.False(dbxAssert.Stages.Any(i => i.Id == returnedModel.Id));
-
         }
 
         [Fact]
@@ -212,9 +115,9 @@ namespace ICSproj.BL.Tests
                 PerformanceDateTime = DateTime.Today,
                 PerformanceDuration = TimeSpan.FromMinutes(80),
             };
-            var retSched = _scheduleRepositorySUT.InsertOrUpdate(scheduleModel);
+            var retunedSchedule = _scheduleRepositorySUT.InsertOrUpdate(scheduleModel);
 
-            var result = _stageRepositorySUT.Delete(retSched.BandId); //WrongID
+            var result = _stageRepositorySUT.Delete(retunedSchedule.BandId); //WrongID
             Assert.False(result);
 
             using var dbxAssert = _dbContextFactory.Create();
@@ -240,7 +143,6 @@ namespace ICSproj.BL.Tests
         [Fact]
         public void InsertOrUpdate_ShouldAdd()
         {
-
             Seed();
             Assert.Equal(3, _scheduleRepositorySUT.GetAll().Count());
             Assert.Equal(3, _stageRepositorySUT.GetAll().Count());
