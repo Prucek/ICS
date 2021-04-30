@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ICSproj.BL.Repositories
 {
-    public class StageRepository
+    public class StageRepository : IRepository<StageDetailModel, StageListModel>
     {
         private readonly INamedDbContextFactory<FestivalDbContext> _dbContextFactory;
 
