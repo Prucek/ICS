@@ -10,6 +10,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="30"/>
             <RowDefinition />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -22,6 +23,17 @@
         <TextBlock Margin="10" Foreground="DarkBlue" FontSize="40" Grid.ColumnSpan="2">
             <Bold>Festival Guide</Bold>
         </TextBlock>
+        <Menu DockPanel.Dock="Top" Grid.Row="1" Grid.ColumnSpan="4" FontSize="20">
+            <MenuItem Header="_Bands">
+            </MenuItem>
+            <MenuItem Header="_Stages">
+            </MenuItem>
+            <MenuItem Header="_Schedules">
+            </MenuItem>
+            <MenuItem Header="_Photos">
+            </MenuItem>
+        </Menu>
+        
 
         <!--<views:StageListView x:Name="StageList"
                               Grid.Row="1" 
@@ -31,6 +43,16 @@
         <views:BandListView x:Name="BandList"
                               Grid.Row="1" 
                               Grid.Column="0"  
-                              DataContext="{Binding BandListViewModel}" />-->
+                              DataContext="{Binding BandListViewModel}" />
+
+        <views:ScheduleListView x:Name="Schedule"
+                              Grid.Row="1" 
+                              Grid.Column="0"  
+                              DataContext="{Binding ScheduleListViewModel}" />-->
+
+        <!--<views:PhotosListView x:Name="Photos"
+                              Grid.Row="1" 
+                              Grid.Column="0"  
+                              DataContext="{Binding PhotosListViewModel}" />-->
     </Grid>
 </Window>

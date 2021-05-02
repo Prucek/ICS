@@ -18,7 +18,7 @@ namespace ICSproj.App.Views
     /// <summary>
     /// Interaction logic for StageListView.xaml
     /// </summary>
-    public partial class StageListView : Window
+    public partial class StageListView
     {
         public StageListView()
         {
