@@ -3,10 +3,34 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ICSproj.App"
+        xmlns:local="clr-namespace:ICSproj.App" xmlns:viewmodels="clr-namespace:ICSproj.App.ViewModels" xmlns:views="clr-namespace:ICSproj.App.Views"
         mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200" />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition Width="300" />
+        </Grid.ColumnDefinitions>
 
+        <TextBlock Margin="10" Foreground="DarkBlue" FontSize="40" Grid.ColumnSpan="2">
+            <Bold>Festival Guide</Bold>
+        </TextBlock>
+
+        <!--<views:StageListView x:Name="StageList"
+                              Grid.Row="1" 
+                              Grid.Column="0"  
+                              DataContext="{Binding StageListViewModel}" />
+
+        <views:BandListView x:Name="BandList"
+                              Grid.Row="1" 
+                              Grid.Column="0"  
+                              DataContext="{Binding BandListViewModel}" />-->
     </Grid>
 </Window>
