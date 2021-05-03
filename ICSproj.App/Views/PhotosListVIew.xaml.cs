@@ -18,7 +18,7 @@ namespace ICSproj.App.Views
     /// <summary>
     /// Interaction logic for PhotosListVIew.xaml
     /// </summary>
-    public partial class PhotosListVIew : Window
+    public partial class PhotosListVIew
     {
         public PhotosListVIew()
         {

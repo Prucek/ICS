@@ -18,7 +18,7 @@ namespace ICSproj.App.Views
     /// <summary>
     /// Interaction logic for ScheduleListView.xaml
     /// </summary>
-    public partial class ScheduleListView : Window
+    public partial class ScheduleListView
     {
         public ScheduleListView()
         {
