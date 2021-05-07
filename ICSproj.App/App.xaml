@@ -7,6 +7,5 @@
     <Application.Resources>
         <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
         <viewModels:DesignTimeViewModelLocator x:Key="ViewModelLocator" />
-        <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
     </Application.Resources>
 </Application>
