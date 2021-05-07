@@ -32,3 +32,37 @@
         </ListBox>
     </Grid>
 </local:UserControlBase>
+<!--<Grid x:Name="Root" Visibility="{Binding Model, Converter={StaticResource NullToVisibilityConverter}}">
+    <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
+    <Button Grid.Row="0" 
+            Command="{Binding BandNewCommand}"
+            Content="Add a New Band"
+            HorizontalAlignment="Right"/>
+    <ListBox x:Name="BandsListBox" Grid.Row="1" ItemsSource="{Binding Bands}">
+        <b:Interaction.Triggers>
+            <b:EventTrigger EventName="SelectionChanged">
+                <b:InvokeCommandAction Command="{Binding BandSelectedCommand}"
+                                       CommandParameter="{Binding ElementName=BandListBox, Path=SelectedItem}" />
+            </b:EventTrigger>
+        </b:Interaction.Triggers>
+        <ListBox.ItemTemplate>
+            <DataTemplate>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,5,5,5" Content="{Binding Name}" />
+                    <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding Description}" VerticalAlignment="Center" Margin="5,5,5,5" HorizontalAlignment="Left"/>
+                </Grid>
+            </DataTemplate>
+        </ListBox.ItemTemplate>
+    </ListBox>
+</Grid>-->
