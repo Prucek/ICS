@@ -5,6 +5,7 @@
              xmlns:viewModels="clr-namespace:ICSproj.App.ViewModels"
              xmlns:converters="clr-namespace:ICSproj.App.Converters">
     <Application.Resources>
+        <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
         <viewModels:DesignTimeViewModelLocator x:Key="ViewModelLocator" />
         <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
     </Application.Resources>
