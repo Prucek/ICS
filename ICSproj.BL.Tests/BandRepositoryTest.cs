@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ICSproj.BL.Models;
 using ICSproj.BL.Repositories;
+using ICSproj.DAL;
+using ICSproj.DAL.Factories;
+using Microsoft.EntityFrameworkCore;
 using Xunit;
 
 namespace ICSproj.BL.Tests
@@ -14,12 +14,12 @@ namespace ICSproj.BL.Tests
         private readonly ScheduleRepository _scheduleRepositorySUT;
         private readonly BandRepository _bandRepositorySUT;
         private readonly StageRepository _stageRepositorySUT;
-        private readonly DbContextInMemoryFactory _dbContextFactory;
+        private readonly IDbContextFactory<FestivalDbContext> _dbContextFactory;
 
         public BandRepositoryTest()
         {
             _dbContextFactory = new DbContextInMemoryFactory(nameof(BandRepositoryTest));
-            using var dbx = _dbContextFactory.Create();
+            using var dbx = _dbContextFactory.CreateDbContext();
             dbx.Database.EnsureCreated();
 
             _scheduleRepositorySUT = new ScheduleRepository(_dbContextFactory);
@@ -68,7 +68,7 @@ namespace ICSproj.BL.Tests
         public void GetById_Seed()
         {
             Seed();
-            using var dbContext = _dbContextFactory.Create();
+            using var dbContext = _dbContextFactory.CreateDbContext();
             var band1 = dbContext.Bands.Single(x => x.Name == "Foo");
             var band2 = dbContext.Bands.Single(x => x.Name == "Lorem Ipsum");
 
@@ -94,7 +94,7 @@ namespace ICSproj.BL.Tests
 
             _bandRepositorySUT.Delete(returnedModel.Id);
 
-            using var dbxAssert = _dbContextFactory.Create();
+            using var dbxAssert = _dbContextFactory.CreateDbContext();
             Assert.False(dbxAssert.Bands.Any(i => i.Id == returnedModel.Id));
 
         }
@@ -131,7 +131,7 @@ namespace ICSproj.BL.Tests
             var result = _bandRepositorySUT.Delete(retSched.StageId);
             Assert.False(result);
 
-            using var dbxAssert = _dbContextFactory.Create();
+            using var dbxAssert = _dbContextFactory.CreateDbContext();
             Assert.True(dbxAssert.Bands.Any(i => i.Id == returnedModel.Id));
         }
 
@@ -264,7 +264,7 @@ namespace ICSproj.BL.Tests
 
         public void Dispose()
         {
-            using var dbx = _dbContextFactory.Create();
+            using var dbx = _dbContextFactory.CreateDbContext();
             dbx.Database.EnsureDeleted();
         }
     }

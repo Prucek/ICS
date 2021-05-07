@@ -6,6 +6,7 @@ using ICSproj.BL.Models;
 using Xunit;
 using ICSproj.BL.Repositories;
 using ICSproj.DAL.Entities;
+using ICSproj.DAL.Factories;
 
 namespace ICSproj.BL.Tests
 {
@@ -19,7 +20,7 @@ namespace ICSproj.BL.Tests
         public ScheduleRepositoryTest()
         {
             _dbContextFactory = new DbContextInMemoryFactory(nameof(ScheduleRepositoryTest));
-            using var dbx = _dbContextFactory.Create();
+            using var dbx = _dbContextFactory.CreateDbContext();
             dbx.Database.EnsureCreated();
 
             _scheduleRepositorySUT = new ScheduleRepository(_dbContextFactory);
@@ -60,7 +61,7 @@ namespace ICSproj.BL.Tests
         public void GetById_Create()
         {
             Seed();
-            using var dbContext = _dbContextFactory.Create();
+            using var dbContext = _dbContextFactory.CreateDbContext();
             var band1 = dbContext.Bands.Single(x => x.Name == "Foo");
             var band2 = dbContext.Bands.Single(x => x.Name == "Lorem Ipsum");
             var stage1 = dbContext.Stages.Single(x => x.Name == "Bar");
@@ -196,7 +197,7 @@ namespace ICSproj.BL.Tests
             var returnedModel = _scheduleRepositorySUT.InsertOrUpdate(scheduleModel);
             _scheduleRepositorySUT.Delete(returnedModel.Id);
 
-            using var dbxAssert = _dbContextFactory.Create();
+            using var dbxAssert = _dbContextFactory.CreateDbContext();
             Assert.False(dbxAssert.Schedule.Any(i => i.Id == returnedModel.Id));
 
         }
@@ -232,7 +233,7 @@ namespace ICSproj.BL.Tests
             var result = _scheduleRepositorySUT.Delete(returnedModel.BandId); //WrongID
             Assert.False(result);
 
-            using var dbxAssert = _dbContextFactory.Create();
+            using var dbxAssert = _dbContextFactory.CreateDbContext();
             Assert.True(dbxAssert.Schedule.Any(i => i.Id == returnedModel.Id));
         }
 
@@ -264,7 +265,7 @@ namespace ICSproj.BL.Tests
             };
             var returnedModel = _scheduleRepositorySUT.InsertOrUpdate(scheduleModel);
 
-            using var dbxAssert = _dbContextFactory.Create();
+            using var dbxAssert = _dbContextFactory.CreateDbContext();
             Assert.Equal(4, dbxAssert.Schedule.Count());
 
             var band = _bandRepositorySUT.GetById(returnedModel.BandId);
@@ -288,7 +289,7 @@ namespace ICSproj.BL.Tests
 
             _scheduleRepositorySUT.DeleteByModel(deleteModel);
 
-            using var dbxAssert = _dbContextFactory.Create();
+            using var dbxAssert = _dbContextFactory.CreateDbContext();
             Assert.Equal(2, dbxAssert.Schedule.Count());
 
             var band = _bandRepositorySUT.GetById(returnedModel.BandId);
@@ -312,7 +313,7 @@ namespace ICSproj.BL.Tests
             };
             var returnedModel = _scheduleRepositorySUT.GetByModel(model);
 
-            using var dbxAssert = _dbContextFactory.Create();
+            using var dbxAssert = _dbContextFactory.CreateDbContext();
             Assert.Equal(3, dbxAssert.Schedule.Count());
 
             var band = _bandRepositorySUT.GetById(returnedModel.BandId);
@@ -404,7 +405,7 @@ namespace ICSproj.BL.Tests
 
         public void Dispose()
         {
-            using var dbx = _dbContextFactory.Create();
+            using var dbx = _dbContextFactory.CreateDbContext();
             dbx.Database.EnsureDeleted();
         }
     }

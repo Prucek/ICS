@@ -14,6 +14,8 @@ namespace ICSproj.BL.Mappers
     {
         public static ScheduleListModel MapScheduleEntityToListModel(ScheduleEntity entity)
         {
+            if (entity == null) return null;
+
             return new ScheduleListModel
             {
                 Id = entity.Id,
@@ -28,6 +30,8 @@ namespace ICSproj.BL.Mappers
 
         public static ScheduleDetailModel MapScheduleEntityToDetailModel(ScheduleEntity entity)
         {
+            if (entity == null) return null;
+
             return new ScheduleDetailModel
             {
                 Id = entity.Id,

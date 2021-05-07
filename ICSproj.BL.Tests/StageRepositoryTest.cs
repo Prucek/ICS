@@ -7,6 +7,7 @@ using ICSproj.BL.Repositories;
 using ICSproj.DAL.Entities;
 using ICSproj.BL.Mappers;
 using ICSproj.BL.Models;
+using ICSproj.DAL.Factories;
 using Xunit;
 
 
@@ -22,7 +23,7 @@ namespace ICSproj.BL.Tests
         public StageRepositoryTest()
         {
             _dbContextFactory = new DbContextInMemoryFactory(nameof(StageRepositoryTest));
-            using var dbx = _dbContextFactory.Create();
+            using var dbx = _dbContextFactory.CreateDbContext();
             dbx.Database.EnsureCreated();
 
             _scheduleRepositorySUT = new ScheduleRepository(_dbContextFactory);
@@ -46,7 +47,7 @@ namespace ICSproj.BL.Tests
         public void GetById_Seed()
         {
             Seed();
-            using var dbContext = _dbContextFactory.Create();
+            using var dbContext = _dbContextFactory.CreateDbContext();
             var stage1 = dbContext.Stages.Single(x => x.Name == "Bar");
             var stage2 = dbContext.Stages.Single(x => x.Name == "Stage Name");
 
@@ -84,7 +85,7 @@ namespace ICSproj.BL.Tests
 
             _stageRepositorySUT.Delete(returnedModel.Id);
 
-            using var dbxAssert = _dbContextFactory.Create();
+            using var dbxAssert = _dbContextFactory.CreateDbContext();
             Assert.False(dbxAssert.Stages.Any(i => i.Id == returnedModel.Id));
         }
 
@@ -120,7 +121,7 @@ namespace ICSproj.BL.Tests
             var result = _stageRepositorySUT.Delete(retunedSchedule.BandId); //WrongID
             Assert.False(result);
 
-            using var dbxAssert = _dbContextFactory.Create();
+            using var dbxAssert = _dbContextFactory.CreateDbContext();
             Assert.True(dbxAssert.Stages.Any(i => i.Id == returnedModel.Id));
         }
 
@@ -255,7 +256,7 @@ namespace ICSproj.BL.Tests
         }
         public void Dispose()
         {
-            using var dbx = _dbContextFactory.Create();
+            using var dbx = _dbContextFactory.CreateDbContext();
             dbx.Database.EnsureDeleted();
         }
     }

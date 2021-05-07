@@ -12,6 +12,8 @@ namespace ICSproj.BL.Mappers
     {
         public static StageListModel MapStageEntityToListModel(StageEntity entity)
         {
+            if (entity == null) return null;
+
             var modelSchedule = new List<ScheduleListModel>();
             if (entity.PerformanceMapping != null)
             {
@@ -29,6 +31,8 @@ namespace ICSproj.BL.Mappers
 
         public static StageDetailModel MapStageEntityToDetailModel(StageEntity entity)
         {
+            if (entity == null) return null;
+
             var modelPhotos = new List<PhotoDetailModel>();
             if (entity.Photos != null)
             {

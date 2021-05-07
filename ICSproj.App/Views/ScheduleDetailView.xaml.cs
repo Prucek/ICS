@@ -12,19 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using ICSproj.App.ViewModels;
 
-namespace ICSproj.App
+namespace ICSproj.App.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for ScheduleDetailView.xaml
     /// </summary>
-    public partial class MainWindow
+    public partial class ScheduleDetailView
     {
-        public MainWindow(MainViewModel mainViewModel)
+        public ScheduleDetailView()
         {
             InitializeComponent();
-            DataContext = mainViewModel;
         }
     }
 }

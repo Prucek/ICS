@@ -5,24 +5,24 @@ using System.Text;
 using System.Threading.Tasks;
 using ICSproj.BL.Mappers;
 using ICSproj.BL.Models;
+using ICSproj.DAL;
 using ICSproj.DAL.Entities;
-using ICSproj.DAL.Factories;
 using Microsoft.EntityFrameworkCore;
 
 namespace ICSproj.BL.Repositories
 {
     public class BandRepository : IRepository<BandDetailModel, BandListModel>
     {
-        private readonly INamedDbContextFactory<FestivalDbContext> _dbContextFactory;
+        private readonly IDbContextFactory<FestivalDbContext> _dbContextFactory;
 
-        public BandRepository(INamedDbContextFactory<FestivalDbContext> dbContextFactory)
+        public BandRepository(IDbContextFactory<FestivalDbContext> dbContextFactory)
         {
             _dbContextFactory = dbContextFactory;
         }
 
         public BandDetailModel InsertOrUpdate(BandDetailModel model)
         {
-            using var dbContext = _dbContextFactory.Create();
+            using var dbContext = _dbContextFactory.CreateDbContext();
 
             var entity = dbContext.Bands.SingleOrDefault(x => x.Name == model.Name);
 
@@ -39,19 +39,19 @@ namespace ICSproj.BL.Repositories
 
         public BandDetailModel GetById(Guid id)
         {
-            using var dbContext = _dbContextFactory.Create();
+            using var dbContext = _dbContextFactory.CreateDbContext();
 
             BandEntity entity = dbContext.Bands.Include(x => x.Photos)
                 .Include(x => x.PerformanceMapping)
                 .ThenInclude(x => x.Stage)
-                .Single(t => t.Id == id);
+                .SingleOrDefault(t => t.Id == id);
 
             return BandMapper.MapBandEntityToDetailModel(entity);
         }
 
         public BandDetailModel GetByName(string bandName)
         {
-            using var dbContext = _dbContextFactory.Create();
+            using var dbContext = _dbContextFactory.CreateDbContext();
 
             BandEntity entity = dbContext.Bands.Single(t => t.Name == bandName);
 
@@ -60,7 +60,7 @@ namespace ICSproj.BL.Repositories
 
         public bool Delete(Guid id)
         {
-            using var dbContext = _dbContextFactory.Create();
+            using var dbContext = _dbContextFactory.CreateDbContext();
 
             var entity = new BandEntity(id);
 
@@ -79,7 +79,7 @@ namespace ICSproj.BL.Repositories
 
         public ICollection<BandListModel> GetAll()
         {
-            using var dbContext = _dbContextFactory.Create();
+            using var dbContext = _dbContextFactory.CreateDbContext();
 
             return dbContext.Bands
                 .Select(e => BandMapper.MapBandEntityToListModel(e)).ToArray();

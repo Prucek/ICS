@@ -1,5 +1,8 @@
-﻿using ICSproj.App.Services;
+﻿using ICSproj.App.Factories;
+using ICSproj.App.Services;
 using ICSproj.BL.Repositories;
+using ICSproj.DAL.Factories;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +13,7 @@ namespace ICSproj.App.ViewModels
 {
     public class DesignTimeViewModelLocator
     {
-        private const string DesignTimeConnectionString = @"inMemory:CookBook";
+        private const string DesignTimeConnectionString = @"inMemory: TasksDB"; // TODO ?
 
         public BandListViewModel BandListViewModel { get; }
         public StageListViewModel StageListViewModel { get; }
@@ -24,10 +27,10 @@ namespace ICSproj.App.ViewModels
 
         public DesignTimeViewModelLocator()
         {
-            var bandRepository = new BandRepository(new DbContextInMemoryFactory(DesignTimeConnectionString));
-            var stageRepository = new StageRepository(new DbContextInMemoryFactory(DesignTimeConnectionString));
-            var scheduleRepository = new ScheduleRepository(new DbContextInMemoryFactory(DesignTimeConnectionString));
-            var photoRepository = new PhotoRepository(new DbContextInMemoryFactory(DesignTimeConnectionString));
+            var bandRepository = new BandRepository(new SqlServerDbContextFactory(DesignTimeConnectionString));
+            var stageRepository = new StageRepository(new SqlServerDbContextFactory(DesignTimeConnectionString));
+            var scheduleRepository = new ScheduleRepository(new SqlServerDbContextFactory(DesignTimeConnectionString));
+            var photoRepository = new PhotoRepository(new SqlServerDbContextFactory(DesignTimeConnectionString));
             var mediator = new Mediator();
             var messageDialogService = new MessageDialogService();
 

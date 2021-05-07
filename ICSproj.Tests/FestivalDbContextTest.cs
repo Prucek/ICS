@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using ICSproj.DAL.Entities;
+using ICSproj.DAL;
 using ICSproj.DAL.Factories;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
@@ -15,7 +16,7 @@ namespace ICSproj.Tests
         public FestivalDbContextTest()
         {
             _dbContextFactory = new DbContextInMemoryFactory(nameof(FestivalDbContextTest));
-            _dbContextSUT = _dbContextFactory.Create();
+            _dbContextSUT = _dbContextFactory.CreateDbContext();
         }
 
         [Fact]
@@ -51,7 +52,7 @@ namespace ICSproj.Tests
             _dbContextSUT.SaveChanges();
 
             //Assert
-            using var dbx = _dbContextFactory.Create();
+            using var dbx = _dbContextFactory.CreateDbContext();
             var bandFromDatabase = dbx.Bands
                 .Include(band => band.PerformanceMapping)
                 .ThenInclude(ScheduleEntity => ScheduleEntity.Stage)
@@ -103,7 +104,7 @@ namespace ICSproj.Tests
             _dbContextSUT.SaveChanges();
 
             //Assert
-            using var dbx = _dbContextFactory.Create();
+            using var dbx = _dbContextFactory.CreateDbContext();
             var stageFromDatabase = dbx.Stages
                 .Include(stage => stage.PerformanceMapping)
                 .ThenInclude(ScheduleEntity => ScheduleEntity.Band)
@@ -137,7 +138,7 @@ namespace ICSproj.Tests
             _dbContextSUT.SaveChanges();
 
 
-            using var dbx = _dbContextFactory.Create();
+            using var dbx = _dbContextFactory.CreateDbContext();
             var scheduleFromDatabase = dbx.Schedule
                 .Include(schedule => schedule.Band)
                 .Include(schedule => schedule.Stage)

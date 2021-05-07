@@ -5,24 +5,24 @@ using System.Text;
 using System.Threading.Tasks;
 using ICSproj.BL.Mappers;
 using ICSproj.BL.Models;
-using ICSproj.DAL.Factories;
 using ICSproj.DAL.Entities;
 using Microsoft.EntityFrameworkCore;
+using ICSproj.DAL;
 
 namespace ICSproj.BL.Repositories
 {
     public class StageRepository : IRepository<StageDetailModel, StageListModel>
     {
-        private readonly INamedDbContextFactory<FestivalDbContext> _dbContextFactory;
+        private readonly IDbContextFactory<FestivalDbContext> _dbContextFactory;
 
-        public StageRepository(INamedDbContextFactory<FestivalDbContext> dbContextFactory)
+        public StageRepository(IDbContextFactory<FestivalDbContext> dbContextFactory)
         {
             _dbContextFactory = dbContextFactory;
         }
 
         public StageDetailModel InsertOrUpdate(StageDetailModel model)
         {
-            using var dbContext = _dbContextFactory.Create();
+            using var dbContext = _dbContextFactory.CreateDbContext();
             var entity = dbContext.Stages.SingleOrDefault(x => x.Name == model.Name);
 
             if (entity == null)
@@ -38,19 +38,19 @@ namespace ICSproj.BL.Repositories
 
         public StageDetailModel GetById(Guid id)
         {
-            using var dbContext = _dbContextFactory.Create();
+            using var dbContext = _dbContextFactory.CreateDbContext();
 
             StageEntity entity = dbContext.Stages.Include(x => x.Photos)
                 .Include(x => x.PerformanceMapping)
                 .ThenInclude(x => x.Band)
-                .Single(t => t.Id == id);
+                .SingleOrDefault(t => t.Id == id);
 
             return StageMapper.MapStageEntityToDetailModel(entity);
         }
 
         public StageDetailModel GetByName(string stageName)
         {
-            using var dbContext = _dbContextFactory.Create();
+            using var dbContext = _dbContextFactory.CreateDbContext();
 
             StageEntity entity = dbContext.Stages.Single(t => t.Name == stageName);
 
@@ -59,7 +59,7 @@ namespace ICSproj.BL.Repositories
 
         public bool Delete(Guid id)
         {
-            using var dbContext = _dbContextFactory.Create();
+            using var dbContext = _dbContextFactory.CreateDbContext();
 
             var entity = new StageEntity(id);
 
@@ -77,7 +77,7 @@ namespace ICSproj.BL.Repositories
 
         public ICollection<StageListModel> GetAll()
         {
-            using var dbContext = _dbContextFactory.Create();
+            using var dbContext = _dbContextFactory.CreateDbContext();
 
             return dbContext.Stages
                 .Select(e => StageMapper.MapStageEntityToListModel(e)).ToArray();

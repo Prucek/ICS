@@ -6,37 +6,38 @@ using System.Threading.Tasks;
 using ICSproj.BL.Mappers;
 using ICSproj.BL.Models;
 using ICSproj.DAL.Entities;
-using ICSproj.DAL.Factories;
+using ICSproj.DAL;
+using Microsoft.EntityFrameworkCore;
 
 namespace ICSproj.BL.Repositories
 {
     public class PhotoRepository : IRepository<PhotoDetailModel, PhotoListModel>
     {
-        private readonly INamedDbContextFactory<FestivalDbContext> _dbContextFactory;
+        private readonly IDbContextFactory<FestivalDbContext> _dbContextFactory;
 
-        public PhotoRepository(INamedDbContextFactory<FestivalDbContext> dbContextFactory)
+        public PhotoRepository(IDbContextFactory<FestivalDbContext> dbContextFactory)
         {
             _dbContextFactory = dbContextFactory;
         }
         public ICollection<PhotoListModel> GetAll()
         {
-            using var dbContext = _dbContextFactory.Create();
+            using var dbContext = _dbContextFactory.CreateDbContext();
 
             return dbContext.Photos.Select(x => PhotoMapper.MapPhotoEntityToListModel(x)).ToArray();
         }
 
         public PhotoDetailModel GetById(Guid id)
         {
-            using var dbContext = _dbContextFactory.Create();
+            using var dbContext = _dbContextFactory.CreateDbContext();
 
-            PhotoEntity entity = dbContext.Photos.Single(t => t.Id == id);
+            PhotoEntity entity = dbContext.Photos.SingleOrDefault(t => t.Id == id);
 
             return PhotoMapper.MapPhotoEntityToDetailModel(entity);
         }
 
         public PhotoDetailModel InsertOrUpdate(PhotoDetailModel model)
         {
-            using var dbContext = _dbContextFactory.Create();
+            using var dbContext = _dbContextFactory.CreateDbContext();
 
             var entity = dbContext.Photos.SingleOrDefault(x => x.Photo == model.Photo);
 
@@ -53,7 +54,7 @@ namespace ICSproj.BL.Repositories
 
         public bool Delete(Guid id)
         {
-            using var dbContext = _dbContextFactory.Create();
+            using var dbContext = _dbContextFactory.CreateDbContext();
 
             var entity = new PhotoEntity(id);
 

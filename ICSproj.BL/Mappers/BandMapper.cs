@@ -12,6 +12,8 @@ namespace ICSproj.BL.Mappers
     {
         public static BandListModel MapBandEntityToListModel(BandEntity entity)
         {
+            if (entity == null) return null;
+
             var modelPhotos = new List<PhotoListModel>();
             if (entity.Photos != null)
             {
@@ -36,6 +38,8 @@ namespace ICSproj.BL.Mappers
 
         public static BandDetailModel MapBandEntityToDetailModel(BandEntity entity)
         {
+            if (entity == null) return null;
+
             var modelPhotos = new List<PhotoDetailModel>();
             if (entity.Photos != null)
             {

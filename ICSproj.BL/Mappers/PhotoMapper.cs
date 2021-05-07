@@ -12,6 +12,8 @@ namespace ICSproj.BL.Mappers
     {
         public static PhotoListModel MapPhotoEntityToListModel(PhotoEntity entity)
         {
+            if (entity == null) return null;
+
             return new PhotoListModel
             {
                 Id = entity.Id,
@@ -21,6 +23,8 @@ namespace ICSproj.BL.Mappers
 
         public static PhotoDetailModel MapPhotoEntityToDetailModel(PhotoEntity entity)
         {
+            if (entity == null) return null;
+
             return new PhotoDetailModel
             {
                 Id = entity.Id,

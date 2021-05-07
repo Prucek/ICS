@@ -6,17 +6,16 @@ using System.Threading.Tasks;
 using ICSproj.BL.Mappers;
 using ICSproj.BL.Models;
 using ICSproj.DAL.Entities;
-using ICSproj.DAL.Factories;
+using ICSproj.DAL;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 
 namespace ICSproj.BL.Repositories
 {
     public class ScheduleRepository : IRepository<ScheduleDetailModel,ScheduleListModel>
     {
-        private readonly INamedDbContextFactory<FestivalDbContext> _dbContextFactory;
+        private readonly IDbContextFactory<FestivalDbContext> _dbContextFactory;
 
-        public ScheduleRepository(INamedDbContextFactory<FestivalDbContext> dbContextFactory)
+        public ScheduleRepository(IDbContextFactory<FestivalDbContext> dbContextFactory)
         {
             _dbContextFactory = dbContextFactory;
         }
@@ -24,7 +23,7 @@ namespace ICSproj.BL.Repositories
 
         public ICollection<ScheduleListModel> GetAll()
         {
-            using var dbContext = _dbContextFactory.Create();
+            using var dbContext = _dbContextFactory.CreateDbContext();
             
             return dbContext.Schedule.Include(x => x.Band)
                 .Include(x => x.Stage)
@@ -33,18 +32,18 @@ namespace ICSproj.BL.Repositories
 
         public ScheduleDetailModel GetById(Guid id)
         {
-            using var dbContext = _dbContextFactory.Create();
+            using var dbContext = _dbContextFactory.CreateDbContext();
 
             ScheduleEntity entity = dbContext.Schedule.Include(x =>x.Band)
                 .Include(x => x.Stage)
-                .Single(t => t.Id == id);
+                .SingleOrDefault(t => t.Id == id);
 
             return ScheduleMapper.MapScheduleEntityToDetailModel(entity);
         }
 
         private IEnumerable<ScheduleDetailModel> GetByStageName(string stageName)
         {
-            using var dbContext = _dbContextFactory.Create();
+            using var dbContext = _dbContextFactory.CreateDbContext();
 
             IEnumerable<ScheduleDetailModel> retVal;
             try
@@ -64,7 +63,7 @@ namespace ICSproj.BL.Repositories
 
         public ScheduleEntity GetByModel(ScheduleDetailModel model)
         {
-            using var dbContext = _dbContextFactory.Create();
+            using var dbContext = _dbContextFactory.CreateDbContext();
 
             ScheduleEntity retVal;
             try
@@ -97,7 +96,7 @@ namespace ICSproj.BL.Repositories
                 if (t.BandName != model.BandName) return false;
 
                 // is collision but should update
-                using var dbContext = _dbContextFactory.Create();
+                using var dbContext = _dbContextFactory.CreateDbContext();
                 DeleteByModel(model);
                 return true;
             }
@@ -107,7 +106,7 @@ namespace ICSproj.BL.Repositories
 
         public ScheduleDetailModel InsertOrUpdate(ScheduleDetailModel model)
         {
-            using var dbContext = _dbContextFactory.Create();
+            using var dbContext = _dbContextFactory.CreateDbContext();
 
             if (!CanBePerformed(model))
             {
@@ -140,7 +139,7 @@ namespace ICSproj.BL.Repositories
 
         public bool Delete(Guid id)
         {
-            using var dbContext = _dbContextFactory.Create();
+            using var dbContext = _dbContextFactory.CreateDbContext();
 
             var entity = new ScheduleEntity(id);
 
@@ -159,7 +158,7 @@ namespace ICSproj.BL.Repositories
 
         public bool DeleteByModel(ScheduleDetailModel model)
         {
-            using var dbContext = _dbContextFactory.Create();
+            using var dbContext = _dbContextFactory.CreateDbContext();
 
             var entity = GetByModel(model);
             if (entity == null)

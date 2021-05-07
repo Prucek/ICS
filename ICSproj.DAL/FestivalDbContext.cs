@@ -4,7 +4,7 @@ using System.Text;
 using ICSproj.DAL.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace ICSproj.DAL.Factories
+namespace ICSproj.DAL
 {
     public class FestivalDbContext : DbContext
     {

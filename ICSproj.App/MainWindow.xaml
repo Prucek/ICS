@@ -3,56 +3,60 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ICSproj.App" xmlns:viewmodels="clr-namespace:ICSproj.App.ViewModels" xmlns:views="clr-namespace:ICSproj.App.Views"
+        xmlns:viewModels="clr-namespace:ICSproj.App.ViewModels"
+        xmlns:views="clr-namespace:ICSproj.App.Views"
         mc:Ignorable="d"
-        d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800"
+        d:DataContext="{d:DesignInstance viewModels:MainViewModel}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="30"/>
-            <RowDefinition />
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200" />
-            <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition Width="300" />
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-
         <TextBlock Margin="10" Foreground="DarkBlue" FontSize="40" Grid.ColumnSpan="2">
             <Bold>Festival Guide</Bold>
         </TextBlock>
-        <Menu DockPanel.Dock="Top" Grid.Row="1" Grid.ColumnSpan="4" FontSize="20">
+        <Menu DockPanel.Dock="Top" Grid.Row="1" Grid.Column="0" FontSize="20">
             <MenuItem Header="_Bands">
             </MenuItem>
             <MenuItem Header="_Stages">
             </MenuItem>
             <MenuItem Header="_Schedules">
             </MenuItem>
-            <MenuItem Header="_Photos">
-            </MenuItem>
         </Menu>
+        <views:StageListView x:Name="StageList" Grid.Column="0" Grid.Row="2" DataContext="{Binding StageListViewModel}"/>
+        <TabControl x:Name="StageDetail"
+                    ItemsSource="{Binding StageDetailViewModels}"
+                    SelectedItem="{Binding SelectedStageDetailViewModel, Mode=TwoWay}"
+                    Grid.Row="2" 
+                    Grid.Column="1" >
+            <TabControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Model.Name}" Margin="5"/>
+                        <Button Content="X" Command="{Binding RelativeSource=
+                                  {RelativeSource FindAncestor,
+                                  AncestorType={x:Type TabControl}},
+                                  Path=DataContext.CloseStageDetailTabCommand}"
+                                CommandParameter="{Binding}"
+                                Width="20" Height="20" FontWeight="Bold" FontSize="12"
+                                Foreground="White" Padding="0">
+                        </Button>
+                    </StackPanel>
+                </DataTemplate>
+            </TabControl.ItemTemplate>
+            <TabControl.ContentTemplate>
+                <DataTemplate>
+                    <views:StageDetailView/>
+                </DataTemplate>
+            </TabControl.ContentTemplate>
+        </TabControl>
+        <!--TODO add Band, Schedule + Program-->
         
-
-        <!--<views:StageListView x:Name="StageList"
-                              Grid.Row="1" 
-                              Grid.Column="0"  
-                              DataContext="{Binding StageListViewModel}" />
-
-        <views:BandListView x:Name="BandList"
-                              Grid.Row="1" 
-                              Grid.Column="0"  
-                              DataContext="{Binding BandListViewModel}" />
-
-        <views:ScheduleListView x:Name="Schedule"
-                              Grid.Row="1" 
-                              Grid.Column="0"  
-                              DataContext="{Binding ScheduleListViewModel}" />-->
-
-        <!--<views:PhotosListView x:Name="Photos"
-                              Grid.Row="1" 
-                              Grid.Column="0"  
-                              DataContext="{Binding PhotosListViewModel}" />-->
     </Grid>
 </Window>

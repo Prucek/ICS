@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ICSproj.App.Factories
 {
-    public class SqlServerDbContextFactory : IDbContextFactory<FestivalDbContext>
+    public class SqlServerDbContextFactory : Microsoft.EntityFrameworkCore.IDbContextFactory<FestivalDbContext>
     {
         private readonly string _connectionString;
 

@@ -10,6 +10,8 @@ using System.Drawing;
 using System.IO;
 using System.Net.Mime;
 using System.Reflection;
+using ICSproj.DAL;
+using ICSproj.DAL.Factories;
 using Microsoft.EntityFrameworkCore;
 
 namespace ICSproj.BL.Tests
@@ -23,7 +25,7 @@ namespace ICSproj.BL.Tests
         public PhotoRepositoryTest()
         {
             _dbContextFactory = new DbContextInMemoryFactory(nameof(PhotoRepositoryTest));
-            using var dbx = _dbContextFactory.Create();
+            using var dbx = _dbContextFactory.CreateDbContext();
             dbx.Database.EnsureCreated();
 
             _stageRepositorySUT = new StageRepository(_dbContextFactory);
@@ -55,7 +57,7 @@ namespace ICSproj.BL.Tests
             var returnedModel = _photoRepositorySUT.InsertOrUpdate(model);
             Assert.NotNull(returnedModel);
 
-            using var dbxAssert = _dbContextFactory.Create();
+            using var dbxAssert = _dbContextFactory.CreateDbContext();
             Assert.True(dbxAssert.Photos.Any(i => i.Id == returnedModel.Id));
 
         }
@@ -202,7 +204,7 @@ namespace ICSproj.BL.Tests
             };
             _stageRepositorySUT.InsertOrUpdate(stageModel);
 
-            using var dbxAssert = _dbContextFactory.Create();
+            using var dbxAssert = _dbContextFactory.CreateDbContext();
             Assert.Single(dbxAssert.Stages.Include(x => x.Photos)
                 .Single(x => x.Name == stageModel.Name).Photos);
         }
@@ -240,7 +242,7 @@ namespace ICSproj.BL.Tests
         }
         public void Dispose()
         {
-            using var dbx = _dbContextFactory.Create();
+            using var dbx = _dbContextFactory.CreateDbContext();
             dbx.Database.EnsureDeleted();
         }
     }
