@@ -37,7 +37,7 @@ namespace ICSproj.App.Services
         {
             if (!_registeredActions.TryGetValue(message.GetType(), out var actions)) return;
 
-            foreach (var action in actions.Where(action => action != null))
+            foreach (var action in actions.Where(action => action != null).ToList())
             {
                 action.DynamicInvoke(message);
             }

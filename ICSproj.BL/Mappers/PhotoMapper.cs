@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,7 +20,8 @@ namespace ICSproj.BL.Mappers
             return new PhotoListModel
             {
                 Id = entity.Id,
-                Photo = entity.Photo
+                Photo = entity.Photo,
+                ForeignGuid = entity.ForeignGuid
             };
         }
 
@@ -26,12 +30,12 @@ namespace ICSproj.BL.Mappers
             if (entity == null) return null;
 
             return new PhotoDetailModel
-            {
-                Id = entity.Id,
-                Photo = entity.Photo,
-                Extension = entity.Extension,
+                {
+                    Id = entity.Id,
+                    Photo = entity.Photo,
+                    ForeignGuid = entity.ForeignGuid
             };
-        }
+            }
 
         public static PhotoEntity MapPhotoDetailModelToEntity(PhotoDetailModel model)
         {
@@ -39,7 +43,7 @@ namespace ICSproj.BL.Mappers
             {
                 Id = model.Id,
                 Photo = model.Photo,
-                Extension = model.Extension,
+                ForeignGuid = model.ForeignGuid
             };
         }
     }

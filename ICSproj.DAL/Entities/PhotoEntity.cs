@@ -16,6 +16,6 @@ namespace ICSproj.DAL.Entities
         { }
 
         public byte[] Photo { get; set; }
-        public string Extension { get; set; }
+        public Guid ForeignGuid{ get; set; }
     }
 }

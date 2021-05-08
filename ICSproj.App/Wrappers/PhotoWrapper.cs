@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,15 +24,9 @@ namespace ICSproj.App.Wrappers
             set => SetValue(value);
         }
 
-        public string Extension
+        public Guid ForeignGuid
         {
-            get => GetValue<string>(); 
-            set => SetValue(value);
-        }
-
-        public int Size
-        {
-            get => GetValue<int>(); 
+            get => GetValue<Guid>(); 
             set => SetValue(value);
         }
 

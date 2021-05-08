@@ -6,7 +6,8 @@
              xmlns:local="clr-namespace:ICSproj.App.Views"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800"
-             d:DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=StageDetailViewModel}">
+             d:DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=StageDetailViewModel}"
+             xmlns:b="http://schemas.microsoft.com/xaml/behaviors">
     <Grid Visibility="{Binding Model, Converter={StaticResource NullToVisibilityConverter}}" Width="250">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -19,14 +20,21 @@
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Label Grid.Row="0" Grid.Column="0" Content="Name" />
-            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Model.Name, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBox Grid.Row="0" Grid.Column="1" 
+                     VerticalAlignment="Top"
+                     Text="{Binding Model.Name, UpdateSourceTrigger=PropertyChanged}"
+                     TextAlignment="Left"
+                     TextWrapping="Wrap"
+                     AcceptsReturn="True"/>
             <Label Grid.Row="1" Grid.Column="0" Content="Description" />
             <TextBox Grid.Row="1"
                  Grid.Column="1"
@@ -35,6 +43,10 @@
                  TextAlignment="Left"
                  TextWrapping="Wrap"
                  AcceptsReturn="True" />
+            <Image Name="StagePhoto" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Source="{Binding Photo.Photo}">
+            </Image>
+            <Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Content="Choose photo" Click="ButtonBase_OnClick" />
+
         </Grid>
     </Grid>
 </local:UserControlBase>

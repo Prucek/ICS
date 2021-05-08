@@ -18,16 +18,32 @@ namespace ICSproj.App.ViewModels
     public class BandDetailViewModel : ViewModelBase, IBandDetailViewModel
     {
         private readonly IRepository<BandDetailModel, BandListModel> _bandRepository;
+        private readonly PhotoRepository _photoRepository;
         private readonly IMediator _mediator;
 
-        public BandDetailViewModel(IRepository<BandDetailModel, BandListModel> bandRepository, IMediator mediator)
+        public BandDetailViewModel(IRepository<BandDetailModel, BandListModel> bandRepository, IRepository<PhotoDetailModel, PhotoListModel> photoRepository, IMediator mediator)
         {
             _bandRepository = bandRepository;
+            _photoRepository = (PhotoRepository)photoRepository;
             _mediator = mediator;
 
             SaveCommand = new RelayCommand(Save, CanSave);
             DeleteCommand = new RelayCommand(Delete);
+
+            _mediator.Register<SelectedMessage<BandWrapper>>(BandSelectedPhoto);
         }
+
+        private void BandSelectedPhoto(SelectedMessage<BandWrapper> message)
+        {
+            LoadPhotos(message.Id);
+        }
+        public void LoadPhotos(Guid id)
+        {
+            var photo = _photoRepository.GetByForeignId(id);
+            Photo = photo;
+        }
+
+        public PhotoDetailModel Photo { get; set; } = new PhotoDetailModel();
 
         public BandWrapper? Model { get; set; }
         public ICommand SaveCommand { get; set; }
@@ -47,6 +63,10 @@ namespace ICSproj.App.ViewModels
             }
 
             Model = _bandRepository.InsertOrUpdate(Model.Model);
+            _photoRepository.DeleteForeign(Model.Id);
+            Photo.ForeignGuid = Model.Id;
+            _photoRepository.InsertOrUpdate(Photo);
+
             _mediator.Send(new UpdateMessage<BandWrapper> {Model = Model});
         }
 

@@ -35,11 +35,20 @@ namespace ICSproj.BL.Repositories
             return PhotoMapper.MapPhotoEntityToDetailModel(entity);
         }
 
+        public PhotoDetailModel GetByForeignId(Guid id)
+        {
+            using var dbContext = _dbContextFactory.CreateDbContext();
+
+            PhotoEntity entity = dbContext.Photos.SingleOrDefault(t => t.ForeignGuid == id);
+
+            return PhotoMapper.MapPhotoEntityToDetailModel(entity);
+        }
+
         public PhotoDetailModel InsertOrUpdate(PhotoDetailModel model)
         {
             using var dbContext = _dbContextFactory.CreateDbContext();
 
-            var entity = dbContext.Photos.SingleOrDefault(x => x.Photo == model.Photo);
+            var entity = dbContext.Photos.SingleOrDefault(x => x.ForeignGuid == model.ForeignGuid && x.Photo == model.Photo);
 
             if (entity == null)
             {
@@ -57,6 +66,29 @@ namespace ICSproj.BL.Repositories
             using var dbContext = _dbContextFactory.CreateDbContext();
 
             var entity = new PhotoEntity(id);
+
+            dbContext.Remove(entity);
+            try
+            {
+                dbContext.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public bool DeleteForeign(Guid id)
+        {
+            using var dbContext = _dbContextFactory.CreateDbContext();
+
+            PhotoEntity entity = dbContext.Photos.SingleOrDefault(t => t.ForeignGuid == id);
+
+            if (entity == null)
+            {
+                return false;
+            }
 
             dbContext.Remove(entity);
             try

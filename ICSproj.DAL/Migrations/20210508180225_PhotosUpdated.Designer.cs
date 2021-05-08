@@ -4,14 +4,16 @@ using ICSproj.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ICSproj.DAL.Migrations
 {
     [DbContext(typeof(FestivalDbContext))]
-    partial class FestivalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210508180225_PhotosUpdated")]
+    partial class PhotosUpdated
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -54,8 +56,8 @@ namespace ICSproj.DAL.Migrations
                     b.Property<Guid?>("BandEntityId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ForeignGuid")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("Extension")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<byte[]>("Photo")
                         .HasColumnType("varbinary(max)");
