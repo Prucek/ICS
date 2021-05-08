@@ -56,7 +56,72 @@
                 </DataTemplate>
             </TabControl.ContentTemplate>
         </TabControl>
-        <!--TODO add Band, Schedule + Program-->
         
     </Grid>
 </Window>
+
+    
+    
+    
+    <!--       MainWindow xaml for testing Band View     -->
+<!--<Window x:Class="ICSproj.App.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModels="clr-namespace:ICSproj.App.ViewModels"
+        xmlns:views="clr-namespace:ICSproj.App.Views"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800"
+        d:DataContext="{d:DesignInstance viewModels:MainViewModel}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Margin="10" Foreground="DarkBlue" FontSize="40" Grid.ColumnSpan="2">
+            <Bold>Festival Guide</Bold>
+        </TextBlock>
+        <Menu DockPanel.Dock="Top" Grid.Row="1" Grid.Column="0" FontSize="20">
+            <MenuItem Header="_Bands">
+            </MenuItem>
+            <MenuItem Header="_Stages">
+            </MenuItem>
+            <MenuItem Header="_Schedules">
+            </MenuItem>
+        </Menu>
+        <views:BandListView x:Name="BandList" Grid.Column="0" Grid.Row="2" DataContext="{Binding BandListViewModel}"/>
+        <TabControl x:Name="BandDetail"
+                    ItemsSource="{Binding BandDetailViewModels}"
+                    SelectedItem="{Binding SelectedBandDetailViewModel, Mode=TwoWay}"
+                    Grid.Row="2" 
+                    Grid.Column="1" >
+            <TabControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Model.Name}" Margin="5"/>
+                        <Button Content="X" Command="{Binding RelativeSource=
+                                  {RelativeSource FindAncestor,
+                                  AncestorType={x:Type TabControl}},
+                                  Path=DataContext.CloseBandDetailTabCommand}"
+                                CommandParameter="{Binding}"
+                                Width="20" Height="20" FontWeight="Bold" FontSize="12"
+                                Foreground="White" Padding="0">
+                        </Button>
+                    </StackPanel>
+                </DataTemplate>
+            </TabControl.ItemTemplate>
+            <TabControl.ContentTemplate>
+                <DataTemplate>
+                    <views:BandDetailView/>
+                </DataTemplate>
+            </TabControl.ContentTemplate>
+        </TabControl>
+
+    </Grid>
+</Window>-->

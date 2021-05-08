@@ -16,7 +16,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Button Grid.Row="0" Content="Add" Command="{Binding SandNewCommand}" />
+        <Button Grid.Row="0" Content="Add" Command="{Binding BandNewCommand}" Background="LightGreen"/>
         <ListBox x:Name="BandListBox" Grid.Row="1" ItemsSource="{Binding Bands}">
             <b:Interaction.Triggers>
                 <b:EventTrigger EventName="SelectionChanged">

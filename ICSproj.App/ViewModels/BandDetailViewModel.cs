@@ -55,7 +55,8 @@ namespace ICSproj.App.ViewModels
             Model != null
             && !string.IsNullOrWhiteSpace(Model.Name)
             && !string.IsNullOrWhiteSpace(Model.Description)
-            && !string.IsNullOrWhiteSpace(Model.Genre);
+            && !string.IsNullOrWhiteSpace(Model.Genre)
+            && !string.IsNullOrWhiteSpace(Model.OriginCountry);
 
         // provides logic for deleting of stage
         public void Delete()

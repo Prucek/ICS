@@ -24,5 +24,10 @@ namespace ICSproj.App.Views
         {
             InitializeComponent();
         }
+
+        private void BandListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
