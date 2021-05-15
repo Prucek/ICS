@@ -5,9 +5,18 @@
                        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
                        xmlns:local="clr-namespace:ICSproj.App.Views"
                        xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+                       xmlns:scm ="clr-namespace:System.ComponentModel;assembly=WindowsBase"
                        mc:Ignorable="d" 
                        d:DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=ScheduleListViewModel}"
                        d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <CollectionViewSource x:Key="SortedObjects" Source="{Binding Schedule}">
+            <CollectionViewSource.SortDescriptions>
+                <scm:SortDescription PropertyName="StageName"/>
+                <scm:SortDescription PropertyName="PerformanceDateTime"/>
+            </CollectionViewSource.SortDescriptions>
+        </CollectionViewSource>
+    </UserControl.Resources>
     <Grid x:Name="Root">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -17,7 +26,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Button Grid.Row="0" Content="Add Schedule" Command="{Binding ScheduleNewCommand}" Background="LightGreen" />
-        <ListBox x:Name="ScheduleListBox" Grid.Row="1" ItemsSource="{Binding Schedule}">
+        <ListBox x:Name="ScheduleListBox" Grid.Row="1" ItemsSource="{Binding Source={StaticResource SortedObjects}}">
             <b:Interaction.Triggers>
                 <b:EventTrigger EventName="SelectionChanged">
                     <b:InvokeCommandAction Command="{Binding ScheduleSelectedCommand}"
@@ -28,10 +37,10 @@
                 <DataTemplate>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="100"/>
                         </Grid.ColumnDefinitions>
                         <Label Grid.Column="0" x:Name="BandLabel" Content="{Binding BandName}"/>
                         <Label Grid.Column="1" x:Name="StageLabel" Content="{Binding StageName}"/>
