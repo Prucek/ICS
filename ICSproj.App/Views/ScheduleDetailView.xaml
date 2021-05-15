@@ -48,7 +48,7 @@
             <Label Grid.Row="3" Grid.Column="0" Grid.RowSpan="2" Content="Date and time"/>
             <syncfusion:DateTimeEdit Grid.Row="4" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="3" Name="dateTimeEdit" Pattern="FullDateTime" DropDownView="Combined" 
                                      DateTime="{Binding Model.PerformanceDateTime, Mode=TwoWay}"
-                                    />
+                                     MinDateTime="06/1/2021" MaxDateTime="12/31/2100"/>
             <Label Grid.Row="7" Grid.Column="0" Grid.RowSpan="2" Content="Time span"/>
             <syncfusion:TimeSpanEdit Grid.Row="7" Grid.Column="2" Format=" h 'hours' m 'minutes'" StepInterval="1:30" 
                                      MinValue="0.0:0"

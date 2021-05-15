@@ -11,13 +11,20 @@
     <Grid x:Name="Root">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Button Grid.Row="0" Content="Add a Stage" Command="{Binding StageNewCommand}" Background="LightGreen" />
-        <ListBox x:Name="StageListBox" Grid.Row="1" ItemsSource="{Binding Stages}">
+        <Button Grid.Row="0" Content="Add a Stage" FontFamily="Georgia" Padding="5" Command="{Binding StageNewCommand}" Background="LightGreen" />
+        <Grid Grid.Row="1" DockPanel.Dock="Top" Height="30">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" FontFamily="Georgia" FontWeight="Bold">Stage name</Label>
+        </Grid>
+        <ListBox x:Name="StageListBox" Grid.Row="2" ItemsSource="{Binding Stages}">
             <b:Interaction.Triggers>
                 <b:EventTrigger EventName="SelectionChanged">
                     <b:InvokeCommandAction Command="{Binding StageSelectedCommand}"
@@ -26,7 +33,7 @@
             </b:Interaction.Triggers>
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Label x:Name="StageName" Content="{Binding Name}"/>
+                    <Label x:Name="StageName" FontFamily="Georgia" Content="{Binding Name}"/>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
