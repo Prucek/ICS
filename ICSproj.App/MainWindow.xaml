@@ -18,11 +18,11 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-        <TextBlock Margin="10" Foreground="DarkBlue" FontSize="40" Grid.ColumnSpan="2">
+        <TextBlock Margin="10" Foreground="DarkBlue" FontFamily="Georgia" FontSize="40" Grid.ColumnSpan="2">
             <Bold>Festival Guide</Bold>
         </TextBlock>
 
-        <Menu DockPanel.Dock="Top" Grid.Row="1" Grid.Column="0" FontSize="20">
+        <Menu FontFamily="Georgia" DockPanel.Dock="Top" Grid.Row="1" Grid.Column="0" FontSize="20">
             <MenuItem x:Name="Menu_Bands" Header="_Bands" Click="Menu_Bands_OnClick">
             </MenuItem>
             <MenuItem x:Name="Menu_Stages" Header="_Stages" Click="Menu_Stages_OnClick">
@@ -120,7 +120,7 @@
             <TabControl.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Sample text" Margin="5"/>
+                        <TextBlock Text="" Margin="5"/>
                         <Button Content="X" Command="{Binding RelativeSource=
                                   {RelativeSource FindAncestor,
                                   AncestorType={x:Type TabControl}},

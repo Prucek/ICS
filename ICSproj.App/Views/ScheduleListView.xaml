@@ -5,19 +5,41 @@
                        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
                        xmlns:local="clr-namespace:ICSproj.App.Views"
                        xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+                       xmlns:scm ="clr-namespace:System.ComponentModel;assembly=WindowsBase"
                        mc:Ignorable="d" 
                        d:DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=ScheduleListViewModel}"
                        d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <CollectionViewSource x:Key="SortedObjects" Source="{Binding Schedule}">
+            <CollectionViewSource.SortDescriptions>
+                <scm:SortDescription PropertyName="StageName"/>
+                <scm:SortDescription PropertyName="PerformanceDateTime"/>
+            </CollectionViewSource.SortDescriptions>
+        </CollectionViewSource>
+    </UserControl.Resources>
     <Grid x:Name="Root">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Button Grid.Row="0" Content="Add Schedule" Command="{Binding ScheduleNewCommand}" Background="LightGreen"/>
-        <ListBox x:Name="ScheduleListBox" Grid.Row="1" ItemsSource="{Binding Schedule}">
+        <Button Grid.Row="0" Content="Add Schedule" FontFamily="Georgia" Padding="5" Command="{Binding ScheduleNewCommand}" Background="LightGreen" />
+        <Grid Grid.Row="1" DockPanel.Dock="Top" Height="30">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="150"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" FontFamily="Georgia" FontWeight="Bold" HorizontalContentAlignment="Center">Band</Label>
+            <Label Grid.Column="1" FontFamily="Georgia" FontWeight="Bold" HorizontalContentAlignment="Center">Stage</Label>
+            <Label Grid.Column="2" FontFamily="Georgia" FontWeight="Bold" HorizontalContentAlignment="Center">Starting Date and Time</Label>
+            <Label Grid.Column="3" FontFamily="Georgia" FontWeight="Bold" HorizontalContentAlignment="Center">Performance Duration</Label>
+        </Grid>
+        <ListBox x:Name="ScheduleListBox" Grid.Row="2" ItemsSource="{Binding Source={StaticResource SortedObjects}}">
             <b:Interaction.Triggers>
                 <b:EventTrigger EventName="SelectionChanged">
                     <b:InvokeCommandAction Command="{Binding ScheduleSelectedCommand}"
@@ -28,15 +50,19 @@
                 <DataTemplate>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="100"/>
                         </Grid.ColumnDefinitions>
-                        <Label Grid.Column="0" x:Name="BandLabel" Content="{Binding BandName}"/>
-                        <Label Grid.Column="1" x:Name="StageLabel" Content="{Binding StageName}"/>
-                        <Label Grid.Column="2" x:Name="DateLabel" Content="{Binding PerformanceDateTime}"/>
-                        <Label Grid.Column="3" x:Name="DurationLabel" Content="{Binding PerformanceDuration}"/>
+                        <Label Grid.Column="0" FontFamily="Georgia" HorizontalContentAlignment="Center"
+                               x:Name="BandLabel" Content="{Binding BandName}"/>
+                        <Label Grid.Column="1" FontFamily="Georgia" HorizontalContentAlignment="Center"
+                               x:Name="StageLabel" Content="{Binding StageName}"/>
+                        <Label Grid.Column="2"  FontFamily="Georgia" HorizontalContentAlignment="Center"
+                               x:Name="DateLabel" Content="{Binding PerformanceDateTime}"/>
+                        <Label Grid.Column="3" FontFamily="Georgia" HorizontalContentAlignment="Center"
+                               x:Name="DurationLabel" Content="{Binding PerformanceDuration}"/>
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
