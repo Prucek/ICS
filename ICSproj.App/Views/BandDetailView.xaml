@@ -49,26 +49,6 @@
                 <Image Name="BandPhoto" Grid.Row="7"  Grid.RowSpan="1" Grid.ColumnSpan="2" Source="{Binding Photo.Photo}">
                 </Image>
                 <Button Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" Content="Choose photo" Click="ButtonBase_OnClick" />
-
-                <Label Content="Schedule of their performances" Grid.Row="7" HorizontalAlignment="Center" Grid.ColumnSpan="2" Margin="5,0,5,5"/>
-                <ScrollViewer 
-                HorizontalScrollBarVisibility="Disabled" 
-                VerticalScrollBarVisibility="Auto"
-                Margin="5,0,5,5" Grid.ColumnSpan="2">
-                    <ListBox x:Name="ScheduleListBox" ItemsSource="{Binding Model.Schedule}" Margin="5,5,5,5" Grid.RowSpan="1" Grid.ColumnSpan="2" Height="84" Width="182">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                </Grid>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-                </ScrollViewer>
             </StackPanel>
         </Grid>
     </ScrollViewer>
