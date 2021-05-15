@@ -11,13 +11,26 @@
     <Grid x:Name="Root">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Button Grid.Row="0" Content="Add a Stage" Command="{Binding StageNewCommand}" Background="LightGreen" />
-        <ListBox x:Name="StageListBox" Grid.Row="1" ItemsSource="{Binding Stages}">
+        <Button Grid.Row="0" Content="Add a Stage" FontFamily="Georgia" Padding="5" Command="{Binding StageNewCommand}" Background="LightGreen" />
+        <Grid Grid.Row="1" DockPanel.Dock="Top" Height="Auto">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Padding="12,5,0,0" FontFamily="Georgia" FontWeight="Bold">Stage name</Label>
+            <Label Grid.Row="1" FontFamily="Georgia" FontWeight="Bold" Foreground="LightSlateGray">Description</Label>
+            
+        </Grid>
+        <ListBox x:Name="StageListBox" Grid.Row="2" ItemsSource="{Binding Stages}">
             <b:Interaction.Triggers>
                 <b:EventTrigger EventName="SelectionChanged">
                     <b:InvokeCommandAction Command="{Binding StageSelectedCommand}"
@@ -27,8 +40,8 @@
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel HorizontalAlignment="Stretch">
-                        <Label x:Name="StageName" Content="{Binding Name}" FontWeight="bold"/>
-                        <TextBlock Text="{Binding Description}" Foreground="LightSlateGray" HorizontalAlignment="Stretch"/>
+                        <Label x:Name="StageName" Content="{Binding Name}" FontFamily="Georgia" FontWeight="bold" HorizontalContentAlignment="Left"/>
+                        <TextBlock Text="{Binding Description}" FontFamily="Georgia" Foreground="LightSlateGray" HorizontalAlignment="Stretch"/>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
