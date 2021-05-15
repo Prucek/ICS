@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using ICSproj.App.Commands;
 using ICSproj.App.Messages;
@@ -54,7 +49,6 @@ namespace ICSproj.App.ViewModels
             Model = _bandRepository.GetById(id) ?? new BandDetailModel();
         }
 
-        // provides logic for storing of new band
         public void Save()
         {
             if (Model == null)
@@ -70,7 +64,6 @@ namespace ICSproj.App.ViewModels
             _mediator.Send(new UpdateMessage<BandWrapper> {Model = Model});
         }
 
-        // new stage can be saved only if user entered it's name, description and genre
         private bool CanSave() =>
             Model != null
             && !string.IsNullOrWhiteSpace(Model.Name)
@@ -78,7 +71,6 @@ namespace ICSproj.App.ViewModels
             && !string.IsNullOrWhiteSpace(Model.Genre)
             && !string.IsNullOrWhiteSpace(Model.OriginCountry);
 
-        // provides logic for deleting of stage
         public void Delete()
         {
             if (Model == null)
@@ -90,7 +82,6 @@ namespace ICSproj.App.ViewModels
             {
                 if (!(_bandRepository.Delete(Model.Id)))
                 {
-                    // maybe use dialog window to report message (if it will be implemented)
                     throw new OperationCanceledException("Failed to delete model !");
                 }
 
@@ -101,11 +92,5 @@ namespace ICSproj.App.ViewModels
             }
         }
 
-        /*
-        public override void LoadInDesignMode()
-        {
-           //Use in case designer wants to put some extern data in design time
-        }
-        */
     }
 }

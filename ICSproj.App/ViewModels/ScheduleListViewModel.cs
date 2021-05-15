@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 using ICSproj.App.Commands;
 using ICSproj.App.Extensions;
@@ -38,19 +33,14 @@ namespace ICSproj.App.ViewModels
         public ICommand ScheduleSelectedCommand { get; }
         public ICommand ScheduleNewCommand { get; }
 
-        // click button for adding new schedule
         private void ScheduleNew() => _mediator.Send(new NewMessage<ScheduleWrapper>());
 
-        // click button for selecting existing schedule
         private void ScheduleSelected(ScheduleListModel schedule) => _mediator.Send(new SelectedMessage<ScheduleWrapper> { Id = schedule.Id });
 
-        // click button for updating schedule
         private void ScheduleUpdated(UpdateMessage<ScheduleWrapper> _) => Load();
 
-        // click button for deleting schedule
         private void ScheduleDeleted(DeleteMessage<ScheduleWrapper> _) => Load();
 
-        // provides loading schedule from repository
         public void Load()
         {
             Schedule.Clear();

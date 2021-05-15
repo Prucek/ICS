@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ICSproj.BL.Models;
-using ICSproj.BL.Repositories;
+﻿using ICSproj.BL.Models;
 using ICSproj.DAL.Entities;
-using ICSproj.DAL.Factories;
 
 namespace ICSproj.BL.Mappers
 {

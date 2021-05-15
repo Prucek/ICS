@@ -6,7 +6,6 @@ using ICSproj.App.Commands;
 using ICSproj.App.Factories;
 using ICSproj.App.Messages;
 using ICSproj.App.Services;
-using ICSproj.App.ViewModels;
 using ICSproj.App.ViewModels.Interfaces;
 using ICSproj.App.Wrappers;
 
@@ -59,7 +58,6 @@ namespace ICSproj.App.ViewModels
             mediator.Register<DeleteMessage<ScheduleWrapper>>(OnScheduleDeleted);
         }
 
-        // stores list and detail View Models of each entity
         public IBandListViewModel BandListViewModel { get; }
 
         public IBandDetailViewModel BandDetailViewModel { get; }
@@ -81,67 +79,59 @@ namespace ICSproj.App.ViewModels
         public ObservableCollection<IPhotoDetailViewModel> PhotoDetailViewModels { get; } = new ObservableCollection<IPhotoDetailViewModel>();
         public ObservableCollection<IScheduleDetailViewModel> ScheduleDetailViewModels { get; } = new ObservableCollection<IScheduleDetailViewModel>();
 
-        // store actual selected View Model
+
         public IBandDetailViewModel SelectedBandDetailViewModel { get; set; }
         public IStageDetailViewModel SelectedStageDetailViewModel { get; set; }
         public IPhotoDetailViewModel SelectedPhotoDetailViewModel { get; set; }
         public IScheduleDetailViewModel SelectedScheduleDetailViewModel { get; set; }
 
-        // store commands for closing detail View Models
+
+
         public ICommand CloseBandDetailTabCommand { get; }
         public ICommand CloseStageDetailTabCommand { get; }
         public ICommand ClosePhotoDetailTabCommand { get; }
         public ICommand CloseScheduleDetailTabCommand { get; }
 
-        // specifies action when user click on adding new band
         private void OnBandNewMessage(NewMessage<BandWrapper> _)
         {
             SelectBand(Guid.Empty);
         }
 
-        // specifies action when user click on adding new stage
         private void OnStageNewMessage(NewMessage<StageWrapper> _)
         {
             SelectStage(Guid.Empty);
         }
 
-        // specifies action when user click on adding new photo
         private void OnPhotoNewMessage(NewMessage<PhotoWrapper> _)
         {
             SelectPhoto(Guid.Empty);
         }
 
-        // specifies action when user click on adding new schedule
         private void OnScheduleNewMessage(NewMessage<ScheduleWrapper> _)
         {
             SelectSchedule(Guid.Empty);
         }
 
-        // specifies action when user click on specific band
         private void OnBandSelected(SelectedMessage<BandWrapper> message)
         {
             SelectBand(message.Id);
         }
 
-        // specifies action when user click on specific stage
         private void OnStageSelected(SelectedMessage<StageWrapper> message)
         {
             SelectStage(message.Id);
         }
 
-        // specifies action when user click on specific photo
         private void OnPhotoSelected(SelectedMessage<PhotoWrapper> message)
         {
             SelectPhoto(message.Id);
         }
 
-        // specifies action when user click on specific schedule
         private void OnScheduleSelected(SelectedMessage<ScheduleWrapper> message)
         {
             SelectSchedule(message.Id);
         }
 
-        // provides deleting of selected band
         private void OnBandDeleted(DeleteMessage<BandWrapper> message)
         {
             var band = BandDetailViewModels.SingleOrDefault(i => i.Model.Id == message.Id);
@@ -151,7 +141,6 @@ namespace ICSproj.App.ViewModels
             }
         }
 
-        // provides deleting of selected stage
         private void OnStageDeleted(DeleteMessage<StageWrapper> message)
         {
             var stage = StageDetailViewModels.SingleOrDefault(i => i.Model.Id == message.Id);
@@ -161,7 +150,6 @@ namespace ICSproj.App.ViewModels
             }
         }
 
-        // provides deleting of selected photo
         private void OnPhotoDeleted(DeleteMessage<PhotoWrapper> message)
         {
             var photo = PhotoDetailViewModels.SingleOrDefault(i => i.Model.Id == message.Id);
@@ -171,7 +159,6 @@ namespace ICSproj.App.ViewModels
             }
         }
 
-        // provides deleting of selected schedule
         private void OnScheduleDeleted(DeleteMessage<ScheduleWrapper> message)
         {
             var schedule = ScheduleDetailViewModels.SingleOrDefault(i => i.Model.Id == message.Id);
@@ -180,7 +167,6 @@ namespace ICSproj.App.ViewModels
                 ScheduleDetailViewModels.Remove(schedule);
             }
         }
-        // Select View Model of band, if not exists then create one
         private void SelectBand(Guid id)
         {
             var bandDetailViewModel =
@@ -195,7 +181,6 @@ namespace ICSproj.App.ViewModels
             SelectedBandDetailViewModel = bandDetailViewModel;
         }
 
-        // Select View Model of stage, if not exists then create one
         private void SelectStage(Guid id)
         {
             var stageDetailViewModel =
@@ -210,7 +195,6 @@ namespace ICSproj.App.ViewModels
             SelectedStageDetailViewModel = stageDetailViewModel;
         }
 
-        // Select View Model of photo, if not exists then create one
         private void SelectPhoto(Guid id)
         {
             var photoDetailViewModel =
@@ -225,7 +209,6 @@ namespace ICSproj.App.ViewModels
             SelectedPhotoDetailViewModel = photoDetailViewModel;
         }
 
-        // Select View Model of schedule, if not exists then create one
         private void SelectSchedule(Guid id)
         {
             var scheduleDetailViewModel =
@@ -240,31 +223,23 @@ namespace ICSproj.App.ViewModels
             SelectedScheduleDetailViewModel = scheduleDetailViewModel;
         }
 
-        // closes band View Model
         private void OnCloseBandDetailTabExecute(IBandDetailViewModel bandDetailViewModel)
         {
-            // TODO: Check if the Detail has changes and ask user to cancel
             BandDetailViewModels.Remove(bandDetailViewModel);
         }
 
-        // closes stage View Model
         private void OnCloseStageDetailTabExecute(IStageDetailViewModel stageDetailViewModel)
         {
-            // TODO: Check if the Detail has changes and ask user to cancel
             StageDetailViewModels.Remove(stageDetailViewModel);
         }
 
-        // closes photo View Model
         private void OnClosePhotoDetailTabExecute(IPhotoDetailViewModel photoDetailViewModel)
         {
-            // TODO: Check if the Detail has changes and ask user to cancel
             PhotoDetailViewModels.Remove(photoDetailViewModel);
         }
 
-        // closes schedule View Model
         private void OnCloseScheduleDetailTabExecute(IScheduleDetailViewModel scheduleDetailViewModel)
         {
-            // TODO: Check if the Detail has changes and ask user to cancel
             ScheduleDetailViewModels.Remove(scheduleDetailViewModel);
         }
     }

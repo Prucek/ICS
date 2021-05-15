@@ -13,7 +13,6 @@ namespace ICSproj.App.ViewModels
         {
             if (DesignerProperties.GetIsInDesignMode(new DependencyObject()))
             {
-                // ReSharper disable once VirtualMemberCallInConstructor
                 LoadInDesignMode();
             }
         }
@@ -23,7 +22,6 @@ namespace ICSproj.App.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        // is called only in designe mode, can be overwrotten in order to put some extern data to design
         public virtual void LoadInDesignMode()
         {
         }

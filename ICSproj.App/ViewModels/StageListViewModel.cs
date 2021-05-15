@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 using ICSproj.App.Commands;
 using ICSproj.App.Extensions;
@@ -38,19 +33,14 @@ namespace ICSproj.App.ViewModels
         public ICommand StageSelectedCommand { get; }
         public ICommand StageNewCommand { get; }
 
-        // click button for adding new stage
         private void StageNew() => _mediator.Send(new NewMessage<StageWrapper>());
 
-        // click button for selecting existing stage
         private void StageSelected(StageListModel stage) => _mediator.Send(new SelectedMessage<StageWrapper> { Id = stage.Id });
 
-        // click button for updating stage
         private void StageUpdated(UpdateMessage<StageWrapper> _) => Load();
 
-        // click button for deleting stage
         private void StageDeleted(DeleteMessage<StageWrapper> _) => Load();
 
-        // provides loading stage from repository
         public void Load()
         {
             Stages.Clear();
@@ -58,11 +48,6 @@ namespace ICSproj.App.ViewModels
             Stages.AddRange(stages);
         }
 
-        /*
-       public override void LoadInDesignMode()
-       {
-          //Use in case designer wants to put some extern data in design time
-       }
-       */
+
     }
 }

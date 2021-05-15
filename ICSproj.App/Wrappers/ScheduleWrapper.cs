@@ -1,16 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ICSproj.BL.Models;
 
 namespace ICSproj.App.Wrappers
 {
-    // Wrapper je niečo ako medzivrstva medzi modelmi z BL a View modelmi z tejto fazy
-    // Zabezpečuje mapovanie medzi týmito dvoma typmi modelov
-    // Uľahčuje View modelom jednoduchšie prepisovať to čo vidí užívateľ
-
+ 
     public class ScheduleWrapper : ModelWrapper<ScheduleDetailModel>
     {
         public ScheduleWrapper(ScheduleDetailModel model)

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using ICSproj.App.Commands;
 using ICSproj.App.Messages;
@@ -37,7 +33,6 @@ namespace ICSproj.App.ViewModels
             Model = _photoRepository.GetById(id) ?? new PhotoDetailModel();
         }
 
-        // provides logic for storing of new photo 
         public void Save()
         {
             if (Model == null)
@@ -49,12 +44,10 @@ namespace ICSproj.App.ViewModels
             _mediator.Send(new UpdateMessage<PhotoWrapper> { Model = Model });
         }
 
-        // new photo can be saved only if there is photo's path
         private bool CanSave() =>
             Model != null
             && Model.Photo.Length > 0;
 
-        // provides logic for deleting of photo 
         public void Delete()
         {
             if (Model == null)
@@ -66,7 +59,6 @@ namespace ICSproj.App.ViewModels
             {
                 if (!(_photoRepository.Delete(Model.Id)))
                 {
-                    // maybe use dialog window to report message (if it will be implemented)
                     throw new OperationCanceledException("Failed to delete model !");
                 }
 
@@ -77,11 +69,5 @@ namespace ICSproj.App.ViewModels
             }
         }
 
-        /*
-        public override void LoadInDesignMode()
-        {
-           //Use in case designer wants to put some extern data in design time
-        }
-        */
     }
 }

@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using ICSproj.App.Commands;
-using ICSproj.App.Extensions;
 using ICSproj.App.Messages;
 using ICSproj.App.Services;
 using ICSproj.App.ViewModels.Interfaces;
@@ -56,7 +50,6 @@ namespace ICSproj.App.ViewModels
             Model = _stageRepository.GetById(id) ?? new StageDetailModel();
         }
 
-        // provides logic for storing of new stage 
         public void Save()
         {
             if (Model == null)
@@ -72,13 +65,11 @@ namespace ICSproj.App.ViewModels
             _mediator.Send(new UpdateMessage<StageWrapper> { Model = Model });
         }
 
-        // new stage can be saved only if user entered it's name and description
         private bool CanSave() =>
             Model != null
             && !string.IsNullOrWhiteSpace(Model.Name)
             && !string.IsNullOrWhiteSpace(Model.Description);
 
-        // provides logic for deleting of stage
         public void Delete()
         {
             if (Model == null)
@@ -90,7 +81,6 @@ namespace ICSproj.App.ViewModels
             {
                 if (!(_stageRepository.Delete(Model.Id)))
                 {
-                    // maybe use dialog window to report message (if it will be implemented)
                     throw new OperationCanceledException("Failed to delete model !");
                 }
 
@@ -101,11 +91,6 @@ namespace ICSproj.App.ViewModels
             }
         }
 
-        /*
-        public override void LoadInDesignMode()
-        {
-           //Use in case designer wants to put some extern data in design time
-        }
-        */
+
     }
 }

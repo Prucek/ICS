@@ -3,9 +3,6 @@ using System.Windows.Input;
 
 namespace ICSproj.App.Commands
 {
-    // logika ktorá zabezpečuje, či sa môže prekresliť obsah
-    // ak môže tak sa invokuje akcia, ktorá to urobí
-
     public class RelayCommand : ICommand
     {
         private readonly Action<object> _executeAction;

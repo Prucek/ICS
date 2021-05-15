@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 using ICSproj.App.Commands;
 using ICSproj.App.Extensions;
@@ -13,8 +11,7 @@ using ICSproj.BL.Repositories;
 
 namespace ICSproj.App.ViewModels
 {
-    // We should discuss whether we want ListViewModel for Photos...maybe only DetailViewModel is sufficient
-    // But it depends on designer :)
+
     public class PhotoListViewModel : IPhotoListViewModel
     {
         private readonly IRepository<PhotoDetailModel, PhotoListModel> _photoRepository;
@@ -37,19 +34,14 @@ namespace ICSproj.App.ViewModels
         public ICommand PhotoSelectedCommand { get; }
         public ICommand PhotoNewCommand { get; }
 
-        // click button for adding new photo
         private void PhotoNew() => _mediator.Send(new NewMessage<PhotoWrapper>());
 
-        // click button for selecting existing photo
         private void PhotoSelected(PhotoListModel photo) => _mediator.Send(new SelectedMessage<PhotoWrapper> { Id = photo.Id });
 
-        // click button for updating photo
         private void PhotoUpdated(UpdateMessage<PhotoWrapper> _) => Load();
 
-        // click button for deleting photo
         private void PhotoDeleted(DeleteMessage<PhotoWrapper> _) => Load();
 
-        // provides loading photo from repository
         public void Load()
         {
             Photos.Clear();
@@ -57,11 +49,5 @@ namespace ICSproj.App.ViewModels
             Photos.AddRange(photos);
         }
 
-        /*
-       public override void LoadInDesignMode()
-       {
-          //Use in case designer wants to put some extern data in design time
-       }
-       */
     }
 }

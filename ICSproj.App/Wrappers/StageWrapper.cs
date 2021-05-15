@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ICSproj.BL.Models;
 
 namespace ICSproj.App.Wrappers
 {
-    // Wrapper je niečo ako medzivrstva medzi modelmi z BL a View modelmi z tejto fazy
-    // Zabezpečuje mapovanie medzi týmito dvoma typmi modelov
-    // Uľahčuje View modelom jednoduchšie prepisovať to čo vidí užívateľ
-
+ 
     public class StageWrapper : ModelWrapper<StageDetailModel>
     {
         public StageWrapper(StageDetailModel model)
@@ -37,7 +30,6 @@ namespace ICSproj.App.Wrappers
         {
             if (model.Photos == null)
             {
-                // List of photos can not be empty
                 return;
             }
             Photos = new ObservableCollection<PhotoWrapper>(
@@ -50,7 +42,6 @@ namespace ICSproj.App.Wrappers
         {
             if (model.Schedule == null)
             {
-                // List of photos can not be empty
                 return;
             }
             Schedule = new ObservableCollection<ScheduleWrapper>(

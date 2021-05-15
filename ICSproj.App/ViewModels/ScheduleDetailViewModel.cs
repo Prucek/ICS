@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using ICSproj.App.Commands;
@@ -36,20 +33,9 @@ namespace ICSproj.App.ViewModels
             SaveCommand = new RelayCommand(Save, CanSave);
             DeleteCommand = new RelayCommand(Delete);
 
-            //_mediator.Register<SelectedMessage<ScheduleWrapper>>(LoadSchedule);
         }
 
-        //private void LoadSchedule(SelectedMessage<ScheduleWrapper> msg)
-        //{
-        //    var SelectedSchedule = _scheduleRepository.GetById(msg.Id);
-        //    if (SelectedStage != null && SelectedBand != null)
-        //    {
-        //        SelectedBand.Name = SelectedSchedule.BandName;
-        //        SelectedStage.Name = SelectedSchedule.StageName;
-        //        DateTimeStart = SelectedSchedule.PerformanceDateTime;
-        //        TimeSpan = SelectedSchedule.PerformanceDuration;
-        //    }
-        //}
+
 
         public ScheduleWrapper? Model { get; set; }
         public ICommand SaveCommand { get; set; }
@@ -58,12 +44,6 @@ namespace ICSproj.App.ViewModels
         public ICollection<BandListModel> BandCollection { get; set; }
         public ICollection<StageListModel> StageCollection { get; set; }
 
-        //public BandListModel SelectedBand { get; set; } = new BandListModel();
-
-        //public StageListModel SelectedStage { get; set; } = new StageListModel();
-
-        //public DateTime DateTimeStart { get; set; } = DateTime.Today;
-        //public TimeSpan TimeSpan { get; set; } = TimeSpan.FromHours(2);
 
         public void Load(Guid id)
         {
@@ -77,7 +57,6 @@ namespace ICSproj.App.ViewModels
             StageCollection = _stageRepository.GetAll();
         }
 
-        // provides logic for storing of new schedule
         public void Save()
         {
             if (Model == null)
@@ -89,19 +68,16 @@ namespace ICSproj.App.ViewModels
             if (result == null)
             {
                 MessageBox.Show("Time collision when inserting new model !");
-                //return;
             }
 
             _mediator.Send(new UpdateMessage<ScheduleWrapper> { Model = Model });
         }
 
-        // new schedule can not be saved without name of band, stage, performance duration and date
         private bool CanSave() =>
             Model != null
             && !string.IsNullOrWhiteSpace(Model.BandName)
             && !string.IsNullOrWhiteSpace(Model.StageName);
 
-            // provides logic for deleting of schedule
         public void Delete()
         {
             if (Model == null)
@@ -113,7 +89,6 @@ namespace ICSproj.App.ViewModels
             {
                 if (!(_scheduleRepository.Delete(Model.Id)))
                 {
-                    // maybe use dialog window to report message (if it will be implemented)
                     throw new OperationCanceledException("Failed to delete model !");
                 }
 
@@ -124,11 +99,6 @@ namespace ICSproj.App.ViewModels
             }
         }
 
-        /*
-        public override void LoadInDesignMode()
-        {
-           //Use in case designer wants to put some extern data in design time
-        }
-        */
+
     }
 }

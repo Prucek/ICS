@@ -1,19 +1,13 @@
 ﻿using ICSproj.App.Factories;
 using ICSproj.App.Services;
 using ICSproj.BL.Repositories;
-using ICSproj.DAL.Factories;
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ICSproj.App.ViewModels
 {
     public class DesignTimeViewModelLocator
     {
-        private const string DesignTimeConnectionString = @"inMemory: TasksDB"; // TODO ?
+        private const string DesignTimeConnectionString = @"inMemory: TasksDB";
 
         public BandListViewModel BandListViewModel { get; }
         public StageListViewModel StageListViewModel { get; }
