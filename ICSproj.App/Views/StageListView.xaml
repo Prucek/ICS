@@ -26,7 +26,10 @@
             </b:Interaction.Triggers>
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Label x:Name="StageName" Content="{Binding Name}"/>
+                    <StackPanel HorizontalAlignment="Stretch">
+                        <Label x:Name="StageName" Content="{Binding Name}" FontWeight="bold"/>
+                        <TextBlock Text="{Binding Description}" Foreground="LightSlateGray" HorizontalAlignment="Stretch"/>
+                    </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>

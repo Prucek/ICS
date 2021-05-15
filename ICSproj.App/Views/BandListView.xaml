@@ -17,7 +17,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Button Grid.Row="0" Content="Add a Band" Command="{Binding BandNewCommand}" Background="LightGreen"/>
-        <ListBox x:Name="BandListBox" Grid.Row="1" ItemsSource="{Binding Bands}">
+        <ListBox x:Name="BandListBox" Grid.Row="1" ItemsSource="{Binding Bands}" >
             <b:Interaction.Triggers>
                 <b:EventTrigger EventName="SelectionChanged">
                     <b:InvokeCommandAction Command="{Binding BandSelectedCommand}"
@@ -26,7 +26,10 @@
             </b:Interaction.Triggers>
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Label x:Name="BandName" Content="{Binding Name}"/>
+                        <StackPanel HorizontalAlignment="Stretch">
+                            <Label x:Name="BandName" Content="{Binding Name}" FontWeight="Bold" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch"/>
+                            <TextBlock Text="{Binding Description}" Foreground="LightSlateGray" HorizontalAlignment="Stretch"/>
+                        </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
