@@ -85,13 +85,13 @@ namespace ICSproj.BL.Repositories
             var scheduleDetailModels = GetByStageName(model.StageName);
 
             foreach (var t in scheduleDetailModels.Where(t => 
-                    (t.PerformanceDateTime < model.PerformanceDateTime &&
-                                                    t.PerformanceDateTime + t.PerformanceDuration > model.PerformanceDateTime)  
+                    (t.PerformanceDateTime <= model.PerformanceDateTime &&
+                                                    t.PerformanceDateTime + t.PerformanceDuration >= model.PerformanceDateTime)  
                     // model starts in another performance
                     ||
                     // model ends in another performance
-                   (t.PerformanceDateTime < model.PerformanceDateTime + model.PerformanceDuration &&
-                    t.PerformanceDateTime + t.PerformanceDuration > model.PerformanceDateTime + model.PerformanceDuration))) 
+                   (t.PerformanceDateTime <= model.PerformanceDateTime + model.PerformanceDuration &&
+                    t.PerformanceDateTime + t.PerformanceDuration >= model.PerformanceDateTime + model.PerformanceDuration))) 
             {
                 if (t.BandName != model.BandName) return false;
 
@@ -114,7 +114,7 @@ namespace ICSproj.BL.Repositories
             }
 
             var entity = dbContext.Schedule
-                .SingleOrDefault(x => x.Band.Name == model.BandName && x.Stage.Name == model.StageName);
+                .SingleOrDefault(x => x.Band.Name == model.BandName && x.Stage.Name == model.StageName && x.PerformanceDateTime == model.PerformanceDateTime);
 
             var band = dbContext.Bands.SingleOrDefault(t => t.Name == model.BandName);
             var stage = dbContext.Stages.SingleOrDefault(t => t.Name == model.StageName);

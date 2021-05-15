@@ -40,7 +40,7 @@ namespace ICSproj.App.ViewModels
             PhotoListViewModel = new PhotoListViewModel(photoRepository, mediator);
             BandDetailViewModel = new BandDetailViewModel(bandRepository, photoRepository, mediator);
             StageDetailViewModel = new StageDetailViewModel(stageRepository, photoRepository, mediator);
-            ScheduleDetailViewModel = new ScheduleDetailViewModel(scheduleRepository, mediator);
+            ScheduleDetailViewModel = new ScheduleDetailViewModel(scheduleRepository, bandRepository, stageRepository, mediator);
             PhotoDetailViewModel = new PhotoDetailViewModel(photoRepository, mediator);
         }
     }
