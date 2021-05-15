@@ -16,7 +16,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Button Grid.Row="0" Content="Add Schedule" Command="{Binding ScheduleNewCommand}" Background="LightGreen" />
+        <Button Grid.Row="0" Content="Add Schedule" Command="{Binding ScheduleNewCommand}" Background="LightGreen"/>
         <ListBox x:Name="ScheduleListBox" Grid.Row="1" ItemsSource="{Binding Schedule}">
             <b:Interaction.Triggers>
                 <b:EventTrigger EventName="SelectionChanged">

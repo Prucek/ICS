@@ -9,7 +9,7 @@
                        d:DesignHeight="450" d:DesignWidth="800"
                        d:DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=ScheduleDetailViewModel}">
     <ScrollViewer>
-        <Grid Visibility="{Binding Model, Converter={StaticResource NullToVisibilityConverter}}" Width="250">
+        <Grid Visibility="{Binding Model, Converter={StaticResource NullToVisibilityConverter}}" Width="250" Background="MediumAquamarine">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -38,21 +38,24 @@
                       DisplayMemberPath="Name"
                       SelectedValuePath="Name"
                       Text="{Binding Path=Model.BandName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                      IsSynchronizedWithCurrentItem="True"/>
+                      IsSynchronizedWithCurrentItem="True"
+                      Margin="0,0,5,0"/>
             <Label Grid.Row="2" Grid.Column="0" Content="Stage name" Margin="0,0,0,0" Grid.RowSpan="2"/>
             <ComboBox Grid.Row="2" Grid.Column="2" ItemsSource="{Binding Path=StageCollection, UpdateSourceTrigger=PropertyChanged}"
                       DisplayMemberPath="Name"
                       SelectedValuePath="Name"
                       Text="{Binding Path=Model.StageName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                      IsSynchronizedWithCurrentItem="True"/>
-            <Label Grid.Row="3" Grid.Column="0" Grid.RowSpan="2" Content="Date and time"/>
-            <syncfusion:DateTimeEdit Grid.Row="4" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="3" Name="dateTimeEdit" Pattern="FullDateTime" DropDownView="Combined" 
-                                     DateTime="{Binding Model.PerformanceDateTime, Mode=TwoWay}"
-                                    />
+                      IsSynchronizedWithCurrentItem="True"
+                      Margin="0,0,5,0"/>
+            <Label Grid.Row="3" Grid.Column="0" Grid.RowSpan="2" Content="Date and time" Margin ="0, 15, 0, 0"/>
+            <syncfusion:DateTimeEdit Grid.Row="4" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="3" Name="dateTimeEdit" Margin="25, 15, 5, 25" Pattern="FullDateTime" DropDownView="Combined" 
+                                                                                     DateTime="{Binding Model.PerformanceDateTime, Mode=TwoWay}"
+                                                                             />
             <Label Grid.Row="7" Grid.Column="0" Grid.RowSpan="2" Content="Time span"/>
             <syncfusion:TimeSpanEdit Grid.Row="7" Grid.Column="2" Format=" h 'hours' m 'minutes'" StepInterval="1:30" 
                                      MinValue="0.0:0"
-                                     Name="timeSpanEdit" Value="{Binding Model.PerformanceDuration, Mode=TwoWay}"/>
+                                     Name="timeSpanEdit" Value="{Binding Model.PerformanceDuration, Mode=TwoWay}"
+                                     Margin="0,0,5,0"/>
         </Grid>
     </ScrollViewer>
 </local:UserControlBase>
